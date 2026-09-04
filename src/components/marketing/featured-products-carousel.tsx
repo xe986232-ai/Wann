@@ -156,7 +156,7 @@ export function FeaturedProductsCarousel() {
               </div>
 
               <div className="flex flex-row flex-wrap gap-2 px-2 pb-2">
-                <span className="flex flex-row items-center gap-1 rounded-full border border-muted/30 px-3 py-1 text-[11px] leading-none text-muted transition-colors duration-200 md:group-hover/card:border-foreground md:group-hover/card:text-foreground">
+                <span className="flex flex-row items-center gap-1 rounded-full border border-muted/30 px-3 py-1 text-[11px] leading-none text-foreground transition-colors duration-200 md:group-hover/card:border-foreground">
                   <TileWaveformIcon width={16} height={16} />
                   {product.downloads}
                 </span>
