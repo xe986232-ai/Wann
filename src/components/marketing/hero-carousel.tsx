@@ -119,7 +119,10 @@ export function HeroCarousel() {
             </motion.div>
           </AnimatePresence>
 
-          <Button variant="secondary" className="mt-8 w-fit">
+          <Button
+            variant="secondary"
+            className="mt-8 w-fit min-w-0 min-h-0 rounded-full px-5 py-2 text-sm md:hover:scale-105"
+          >
             View Pack
           </Button>
         </div>
