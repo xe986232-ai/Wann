@@ -36,15 +36,16 @@ export default async function ProductPage({
           ]}
         />
 
-        <div
-          className="relative mt-lg w-full max-w-md overflow-hidden rounded-xl bg-surface-2"
-          style={{ aspectRatio: "1 / 1" }}
-        >
-          <img
-            src={product.image}
-            alt={`Sample Pack: ${product.name}`}
-            className="product-image absolute inset-0 h-full w-full rounded-xl object-cover"
-          />
+        <div className="mt-lg grid grid-cols-12 gap-x-5">
+          <div className="col-span-12 flex flex-col sm:col-span-6 md:col-span-5 lg:col-span-4 xl:col-span-3">
+            <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-surface-2">
+              <img
+                src={product.image}
+                alt={`Sample Pack: ${product.name}`}
+                className="product-image absolute inset-0 h-full w-full rounded-xl object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
