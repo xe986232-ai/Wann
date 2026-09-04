@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Breadcrumb } from "@/components/marketing/breadcrumb";
 import { ReadMore } from "@/components/marketing/read-more";
+import { SamplesSection } from "@/components/marketing/samples-section";
 import {
   DownloadIcon,
   FlameIcon,
@@ -126,6 +127,10 @@ export default async function ProductPage({
             <ReadMore text={product.description} />
           </div>
         </div>
+
+        {product.samples && product.samples.length > 0 && (
+          <SamplesSection samples={product.samples} />
+        )}
       </div>
     </div>
   );

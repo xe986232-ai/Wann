@@ -199,6 +199,98 @@ export function DownloadIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** Search — magnifying glass, used on filter/search triggers. */
+export function SearchIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M16.25 16.25L12.0833 12.0833M3.75 8.6111C3.75 10.1584 4.36528 11.6425 5.4592 12.7364C6.55311 13.8303 8.03716 14.4456 9.58447 14.4456C11.1318 14.4456 12.6158 13.8303 13.7097 12.7364C14.8037 11.6425 15.4189 10.1584 15.4189 8.6111C15.4189 7.06378 14.8037 5.57974 13.7097 4.48582C12.6158 3.3919 11.1318 2.77661 9.58447 2.77661C8.03716 2.77661 6.55311 3.3919 5.4592 4.48582C4.36528 5.57974 3.75 7.06378 3.75 8.6111Z"
+        stroke="currentColor"
+        strokeWidth="1.67"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Loop — five bars of varying height, marks loop-type samples. */
+export function LoopIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M18.6668 11.1666C18.463 9.7001 17.7827 8.3413 16.7307 7.2995C15.6787 6.25769 14.3133 5.59068 12.8449 5.40121C11.3765 5.21174 9.88651 5.51032 8.6045 6.25096C7.32248 6.99159 6.31954 8.1332 5.75016 9.49992M5.3335 6.16658V9.49992H8.66683M5.3335 12.8333C5.5373 14.2998 6.21761 15.6586 7.26963 16.7004C8.32166 17.7422 9.68703 18.4092 11.1554 18.5987C12.6238 18.7881 14.1138 18.4896 15.3958 17.7489C16.6778 17.0083 17.6808 15.8667 18.2502 14.5M18.6668 17.8333V14.5H15.3335"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** One Shot — four vertical ticks, marks single-hit samples. */
+export function OneShotIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M4 12H6M8 8V16M12 5V19M16 8V16M18 12H20"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Chevron Down — small caret, used on dropdown/filter triggers. */
+export function ChevronDownIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M5 7.5L10 12.5L15 7.5"
+        stroke="currentColor"
+        strokeWidth="1.67"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /** Menu / List — 3 horizontal lines, used for nav menu / row options. */
 export function MenuIcon(props: SVGProps<SVGSVGElement>) {
   return (
