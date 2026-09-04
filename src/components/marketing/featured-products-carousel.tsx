@@ -25,35 +25,23 @@ const tags = [
 ];
 
 const products: Product[] = [
-  { name: "Stars", provider: "Wolves", image: "6a8462d8b5012.jpg", downloads: 162, href: "/sample-pack/stars" },
-  { name: "Boom Bap Drums Vol.2", provider: "Alliant Audio", image: "6a706a0bbe2bd.jpg", downloads: 151, href: "/sample-pack/boom-bap-drums-vol-2" },
-  { name: "GHETTO STORIES VOL 3", provider: "Mystic Samples", image: "6a5e796bb82bf.jpg", downloads: 209, href: "/sample-pack/ghetto-stories-vol-3" },
-  { name: "British Techno Vocals", provider: "Element One", image: "6a8583fe2f102.jpg", downloads: 185, href: "/sample-pack/british-techno-vocals" },
-  { name: "808 Type Beat", provider: "SHOBEATS", image: "6a8246e5afdf5.jpg", downloads: 105, href: "/sample-pack/808-type-beat" },
-  { name: "A Touch Of Boom Bap", provider: "Alliant Audio", image: "6a706808db0af.jpg", downloads: 157, href: "/sample-pack/a-touch-of-boom-bap" },
-  { name: "samples from non-exclusive beats 01", provider: "made.+ samples.", image: "6a6a9576262f9.jpg", downloads: 561, href: "/sample-pack/samples-from-non-exclusive-beats-01" },
-  { name: "Southside Trench", provider: "OLLLOS", image: "6a771a24795fe.jpg", downloads: 97, href: "/sample-pack/southside-trench" },
-  { name: "Hermes", provider: "Aquila Beats", image: "69f394048546e.jpg", downloads: 101, href: "/sample-pack/hermes" },
-  { name: "Rare Grooves - Oldschool Hip-Hop", provider: "Godlike Loops", image: "6a7af9a18e3c5.jpg", downloads: 92, href: "/sample-pack/rare-grooves-oldschool-hip-hop" },
-  { name: "Reborn Sample Pack", provider: "Double Bang Music", image: "6a7cff393494f.jpg", downloads: 116, href: "/sample-pack/reborn-sample-pack" },
-  { name: "OUTPUT", provider: "CJR", image: "6a71bf51d52f8.jpg", downloads: 159, href: "/sample-pack/output" },
-  { name: "Cold Blood - Trap Beats", provider: "SOLVED.", image: "6a735de96262d.jpg", downloads: 160, href: "/sample-pack/cold-blood-trap-beats" },
-  { name: "KILLAZ - Detroit Bangers", provider: "T-KID The Producer", image: "6a7361ee37790.jpg", downloads: 58, href: "/sample-pack/killaz-detroit-bangers" },
-  { name: "UNDERGROUND MIXTAPE VOL. 1", provider: "Mystic Samples", image: "6a778276ba0bd.jpg", downloads: 205, href: "/sample-pack/underground-mixtape-vol-1" },
-  { name: "INDIE SOUL SAMPLES", provider: "Motion Emotion Vibes", image: "6a6cde9dce51c.jpg", downloads: 126, href: "/sample-pack/indie-soul-samples" },
-  { name: "Gbono Afrobeats", provider: "Flame Audio", image: "6a6d8fba1a2ab.jpeg", downloads: 94, href: "/sample-pack/gbono-afrobeats" },
-  { name: "PINK - Afro RnB", provider: "Tichwise Productions", image: "6a6cc3955631e.jpg", downloads: 64, href: "/sample-pack/pink-afro-rnb" },
-  { name: "Raw Heritage", provider: "Jungle Loops", image: "6a733b06a45c2.jpg", downloads: 171, href: "/sample-pack/raw-heritage" },
-  { name: "'Sinner' Epic Songstarters", provider: "Prosound Sonics", image: "6a65ce2c8ea19.JPG", downloads: 151, href: "/sample-pack/sinner-20-epic-songstarters" },
-  { name: "The Real Trap", provider: "SHOBEATS", image: "6a67b661443d2.jpg", downloads: 107, href: "/sample-pack/the-real-trap" },
-  { name: "The Boom Files", provider: "Godlike Loops", image: "6a64b4226f0d1.jpg", downloads: 142, href: "/sample-pack/the-boom-files-hip-hop-samples" },
-  { name: "Spaces", provider: "SAMPLE SWAMP", image: "6a5d29ac1143e.jpg", downloads: 78, href: "/sample-pack/spaces" },
-  { name: "Trap Baby Vol. 1", provider: "Project Blvck", image: "6a5dd2c60dd14.jpg", downloads: 161, href: "/sample-pack/trap-baby-dark-melodic-loops" },
+  {
+    name: "Concrete Bloom",
+    provider: "Nightshade Audio",
+    image:
+      "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=800&q=80",
+    downloads: 128,
+    href: "/sample-pack/concrete-bloom",
+  },
+  {
+    name: "Glass Horizon",
+    provider: "Faraway Sounds",
+    image:
+      "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80",
+    downloads: 94,
+    href: "/sample-pack/glass-horizon",
+  },
 ];
-
-function imageUrl(file: string) {
-  return `https://img.slooply.com/fit-in/400x400/filters:quality(60)/${file}`;
-}
 
 export function FeaturedProductsCarousel() {
   const [activeTag, setActiveTag] = useState("Latest");
@@ -101,7 +89,7 @@ export function FeaturedProductsCarousel() {
                 <a href={product.href} className="block">
                   <span className="relative block aspect-square w-full overflow-hidden rounded-lg bg-background">
                     <img
-                      src={imageUrl(product.image)}
+                      src={product.image}
                       alt={product.name}
                       width={400}
                       height={400}
