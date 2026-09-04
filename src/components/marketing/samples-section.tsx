@@ -141,20 +141,23 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
         )}
       </div>
 
-      {/* Table header (desktop) */}
-      <div className="hidden grid-cols-[1fr_max-content_max-content_max-content_max-content_max-content] items-center gap-4 border-b border-surface-2 px-2 py-3 text-xs text-muted lg:grid">
-        <div>Name</div>
-        <div>Type</div>
-        <div>Bpm</div>
-        <div>Key</div>
-        <div>Time</div>
-        <div />
-      </div>
+      {/* Shared grid: header + every row use grid-cols-subgrid so columns
+          line up perfectly and the row dividers stay clean/aligned. */}
+      <div className="grid grid-cols-[max-content_1fr_max-content] lg:grid-cols-[max-content_1fr_max-content_max-content_max-content_max-content_max-content]">
+        {/* Table header (desktop) */}
+        <div className="col-span-full hidden grid-cols-subgrid items-center gap-4 border-b border-surface-2 px-2 py-3 text-xs text-muted lg:grid">
+          <div />
+          <div>Name</div>
+          <div>Type</div>
+          <div>Bpm</div>
+          <div>Key</div>
+          <div>Time</div>
+          <div />
+        </div>
 
-      {/* Rows */}
-      <div>
+        {/* Rows */}
         {filteredSamples.length === 0 && (
-          <p className="py-8 text-center text-sm text-muted">
+          <p className="col-span-full py-8 text-center text-sm text-muted">
             No samples match your filters.
           </p>
         )}
@@ -162,7 +165,7 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
         {filteredSamples.map((sample) => (
           <div
             key={sample.id}
-            className="grid grid-cols-[max-content_1fr_max-content] items-center gap-4 border-b border-surface-2 px-2 py-3 lg:grid-cols-[max-content_1fr_max-content_max-content_max-content_max-content_max-content]"
+            className="col-span-full grid grid-cols-subgrid items-center gap-4 border-b border-surface-2 px-2 py-3"
           >
             <button
               type="button"
