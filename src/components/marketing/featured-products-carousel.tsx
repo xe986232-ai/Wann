@@ -1,15 +1,8 @@
 "use client";
 
 import { PlayIcon, SectionArrowIcon, TileWaveformIcon } from "@/components/icons";
+import { products } from "@/lib/products";
 import { useRef, useState } from "react";
-
-interface Product {
-  name: string;
-  provider: string;
-  image: string;
-  downloads: number;
-  href: string;
-}
 
 const tags = [
   "Latest",
@@ -22,25 +15,6 @@ const tags = [
   "Tech-House",
   "Amapiano",
   "Pop",
-];
-
-const products: Product[] = [
-  {
-    name: "Concrete Bloom",
-    provider: "Nightshade Audio",
-    image:
-      "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=800&q=80",
-    downloads: 128,
-    href: "/sample-pack/concrete-bloom",
-  },
-  {
-    name: "Glass Horizon",
-    provider: "Faraway Sounds",
-    image:
-      "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80",
-    downloads: 94,
-    href: "/sample-pack/glass-horizon",
-  },
 ];
 
 export function FeaturedProductsCarousel() {
@@ -82,11 +56,11 @@ export function FeaturedProductsCarousel() {
         >
           {products.map((product) => (
             <li
-              key={product.href}
+              key={product.slug}
               className="group/card relative flex w-52 shrink-0 flex-col items-start justify-start gap-1 overflow-hidden rounded-2xl bg-surface-2 p-3 transition-colors duration-300 hover:bg-surface-2/70"
             >
               <div className="relative w-full">
-                <a href={product.href} className="block">
+                <a href={`/sample-pack/${product.slug}`} className="block">
                   <span className="relative block aspect-square w-full overflow-hidden rounded-lg bg-background">
                     <img
                       src={product.image}
@@ -138,9 +112,9 @@ export function FeaturedProductsCarousel() {
 
               <div className="flex w-full min-w-0 flex-col px-2 pb-2 pt-3">
                 <p className="truncate text-sm font-medium text-foreground transition-colors duration-300">
-                  <a href={product.href}>{product.name}</a>
+                  <a href={`/sample-pack/${product.slug}`}>{product.name}</a>
                 </p>
-                <p className="truncate text-xs text-muted">{product.provider}</p>
+                <p className="truncate text-xs text-muted">{product.providerName}</p>
               </div>
 
               <div className="flex flex-row flex-wrap gap-2 px-2 pb-2">

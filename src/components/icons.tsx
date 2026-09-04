@@ -113,6 +113,25 @@ export function SettingsIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** Chevron Right — small caret used in breadcrumbs and inline navigation. */
+export function ChevronRightIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M9 6l6 6l-6 6" />
+    </svg>
+  );
+}
+
 /** Menu / List — 3 horizontal lines, used for nav menu / row options. */
 export function MenuIcon(props: SVGProps<SVGSVGElement>) {
   return (
