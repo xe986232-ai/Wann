@@ -97,7 +97,7 @@ export function HeroCarousel() {
               {isPlaying ? (
                 <EqualizerIcon width={18} height={18} />
               ) : (
-                <PlayIcon width={44} height={44} />
+                <PlayIcon width={44} height={44} className="h-16 w-16" />
               )}
             </button>
           </div>
