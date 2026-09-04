@@ -44,7 +44,7 @@ export function HeroCarousel() {
 
   return (
     <div className="px-sm md:px-lg">
-      <div className="relative isolate h-[560px] w-full flex-shrink-0 overflow-hidden rounded-[32px] p-8 md:h-[640px] md:p-12">
+      <div className="relative isolate aspect-[10/11] w-full flex-shrink-0 overflow-hidden rounded-[32px] p-8 md:aspect-[16/9] md:p-12">
         {/* background image — full bleed, ignores the slide's own padding */}
         <span className="absolute inset-0 block overflow-hidden bg-surface-2">
           <AnimatePresence mode="wait">
@@ -119,8 +119,8 @@ export function HeroCarousel() {
             </motion.div>
           </AnimatePresence>
 
-          <Button variant="secondary" className="mt-8 hidden w-fit md:block">
-            View pack
+          <Button variant="secondary" className="mt-8 w-fit">
+            View Pack
           </Button>
         </div>
       </div>
