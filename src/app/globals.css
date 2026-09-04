@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+:root {
+  --background: #111216;
+  --surface: #171a1f;
+  --surface-2: #282c32;
+  --foreground: #fbfbfc;
+  --muted: #99a3b4;
+  --accent: #ca1248;
+  --accent-hover: #e01553;
+
+  --space-xs: 6px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 56px;
+  --space-xl: 112px;
+
+  --shadow-sm: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+
+  --font-sans: var(--font-inter);
+
+  --spacing-xs: var(--space-xs);
+  --spacing-sm: var(--space-sm);
+  --spacing-md: var(--space-md);
+  --spacing-lg: var(--space-lg);
+  --spacing-xl: var(--space-xl);
+
+  --shadow-sm: var(--shadow-sm);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Inter, sans-serif;
+}
+
+/* Type scale from design tokens */
+h1, .text-h1 {
+  font-size: 80px;
+  font-weight: 500;
+  line-height: 88px;
+  letter-spacing: -3.2px;
+}
+h2, .text-h2 {
+  font-size: 57px;
+  font-weight: 400;
+  line-height: 68px;
+  letter-spacing: 0px;
+}
+h3, .text-h3 {
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 48px;
+  letter-spacing: -0.32px;
+}
+h4, .text-h4 {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 34px;
+  letter-spacing: 0px;
+}
+p, .text-body {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0px;
+}
+
+@media (max-width: 768px) {
+  h1, .text-h1 { font-size: 40px; line-height: 46px; letter-spacing: -1.4px; }
+  h2, .text-h2 { font-size: 32px; line-height: 40px; }
+  h3, .text-h3 { font-size: 26px; line-height: 32px; }
+}
