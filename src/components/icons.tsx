@@ -57,8 +57,8 @@ export function PlayIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width="44"
-      height="65"
-      viewBox="0 0 44 65"
+      height="44"
+      viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"

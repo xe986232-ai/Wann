@@ -117,7 +117,7 @@ export function FeaturedProductsCarousel() {
                     aria-label="Play"
                     className="pointer-events-auto flex h-11 w-11 touch-manipulation select-none items-center justify-center rounded-full bg-foreground text-background transition-all duration-200 ease-in-out active:scale-90 md:hover:bg-background md:hover:text-foreground"
                   >
-                    <PlayIcon width={20} height={20} className="ml-0.5" />
+                    <PlayIcon width={44} height={44} />
                   </button>
                 </div>
 
