@@ -35,6 +35,16 @@ export default async function ProductPage({
             { label: product.name },
           ]}
         />
+
+        <div className="relative mt-lg aspect-square w-full max-w-md overflow-hidden rounded-xl bg-surface-2">
+          <img
+            src={product.image}
+            alt={`Sample Pack: ${product.name}`}
+            width={500}
+            height={500}
+            className="product-image absolute inset-0 h-full w-full rounded-xl object-cover"
+          />
+        </div>
       </div>
     </div>
   );
