@@ -291,6 +291,29 @@ export function ChevronDownIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** Samples Tab — five bars of varying height (20x20), used on the "Samples" tab trigger. */
+export function SamplesTabIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M3.33331 12.2214L3.33331 7.77691M6.66665 15.5547L6.66665 4.44358M9.99998 13.0547L9.99998 6.94358M13.3333 13.888L13.3333 6.11024M16.6666 11.388L16.6666 8.61024"
+        stroke="currentColor"
+        strokeWidth="1.67"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /** Menu / List — 3 horizontal lines, used for nav menu / row options. */
 export function MenuIcon(props: SVGProps<SVGSVGElement>) {
   return (

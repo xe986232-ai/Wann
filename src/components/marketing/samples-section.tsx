@@ -10,6 +10,7 @@ import {
   MenuIcon,
   OneShotIcon,
   PlayIcon,
+  SamplesTabIcon,
   SearchIcon,
 } from "@/components/icons";
 
@@ -61,13 +62,16 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
           <button
             type="button"
             onClick={() => setTypeFilter("all")}
-            className={`shrink-0 whitespace-nowrap rounded-full px-6 py-3 text-sm outline outline-2 outline-offset-[-2px] transition-colors ${
-              typeFilter === "all"
-                ? "outline-accent text-foreground"
-                : "outline-surface-2 text-muted"
+            aria-label="Samples"
+            className={`flex-shrink-0 whitespace-nowrap outline outline-2 outline-offset-[-2px] px-6 py-3 rounded-[60px] inline-flex justify-center items-center gap-2 transition-all duration-200 ease-in-out select-none ${
+              typeFilter === "all" ? "outline-accent" : "outline-surface-2"
             }`}
           >
-            Samples <span className="text-muted">({samples.length})</span>
+            <SamplesTabIcon className="h-5 w-5 text-muted" />
+            <span className="text-base text-foreground">Samples</span>
+            <span className="text-[10px] text-muted">
+              ({samples.length})
+            </span>
           </button>
         </div>
         <div className="flex items-center gap-2 overflow-x-auto">
