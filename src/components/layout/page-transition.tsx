@@ -35,7 +35,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
 
   return (
     <motion.div
-      animate={isExiting ? { y: 140 } : { y: 0 }}
+      animate={isExiting ? { y: -140 } : { y: 0 }}
       transition={{ duration: 0.5, ease: scrollEase }}
     >
       {children}
