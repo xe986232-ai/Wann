@@ -18,6 +18,44 @@ const tags = [
   "Pop",
 ];
 
+function ProductCoverImage({
+  images,
+  name,
+}: {
+  images: string[];
+  name: string;
+}) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+
+    const id = setInterval(() => {
+      setIndex((current) => (current + 1) % images.length);
+    }, 2200);
+
+    return () => clearInterval(id);
+  }, [images]);
+
+  return (
+    <>
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={name}
+          width={400}
+          height={400}
+          loading="lazy"
+          className={`absolute inset-0 h-full w-full rounded-lg object-cover transition-opacity duration-700 ease-in-out ${
+            i === index ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+    </>
+  );
+}
+
 export function FeaturedProductsCarousel() {
   const [activeTag, setActiveTag] = useState("Latest");
   const [playingSlug, setPlayingSlug] = useState<string | null>(null);
@@ -107,13 +145,9 @@ export function FeaturedProductsCarousel() {
               <div className="relative w-full">
                 <TransitionLink href={`/sample-pack/${product.slug}`} className="block">
                   <span className="relative block aspect-square w-full overflow-hidden rounded-lg bg-background">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      width={400}
-                      height={400}
-                      loading="lazy"
-                      className="h-full w-full rounded-lg object-cover"
+                    <ProductCoverImage
+                      images={product.images ?? [product.image]}
+                      name={product.name}
                     />
                   </span>
                 </TransitionLink>
