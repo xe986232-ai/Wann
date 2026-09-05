@@ -333,7 +333,7 @@ export function SamplesSection({
                     : "bg-surface-2 text-white hover:bg-accent hover:text-white"
                 }`}
               >
-                <PlayIcon className="h-6 w-6" />
+                <PlayIcon className="h-8 w-8" />
               </button>
 
               {/* Name + tags */}
