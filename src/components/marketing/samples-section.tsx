@@ -338,14 +338,14 @@ export function SamplesSection({
 
               {/* Name + tags */}
               <div className="min-w-0 truncate">
-                <p className="truncate text-xs text-foreground">
+                <p className="truncate text-sm text-foreground">
                   {sample.name}
                 </p>
-                <div className="mt-1 flex flex-wrap gap-1">
+                <div className="mt-1.5 flex flex-wrap gap-1.5">
                   {sample.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-surface-2 px-2 py-0.5 text-[10px] text-muted"
+                      className="rounded-full bg-background px-2.5 py-1 text-xs text-muted"
                     >
                       {tag}
                     </span>
