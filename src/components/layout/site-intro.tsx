@@ -2,10 +2,10 @@ export function SiteIntro() {
   return (
     <section className="relative z-10 px-[5%] py-10 md:px-[3%] lg:py-20">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-3 text-center">
-        <h2 className="text-base font-medium text-foreground">
+        <h2 className="text-sm font-medium text-foreground">
           FL Studio Mobile Projects &amp; Royalty-Free Samples
         </h2>
-        <p className="text-xs text-muted">
+        <p className="text-[11px] leading-relaxed text-muted">
           Rizwoow is your go-to source for ready-to-use FL Studio Mobile
           project files and royalty-free samples. Every project comes fully
           arranged and easy to customize, so you can drop it straight into
