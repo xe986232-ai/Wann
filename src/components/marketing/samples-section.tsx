@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Sample } from "@/lib/products";
+import Link from "next/link";
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -538,7 +539,7 @@ export function SamplesSection({
                         <SimilarIcon className="h-4 w-4 text-white" />
                         Find Similar
                       </button>
-                      <a
+                      <Link
                         href={
                           providerSlug
                             ? `/provider/sample-packs/${providerSlug}`
@@ -548,7 +549,7 @@ export function SamplesSection({
                       >
                         <ProviderIcon className="h-4 w-4 text-white" />
                         View Provider
-                      </a>
+                      </Link>
                       <button
                         type="button"
                         className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-white hover:bg-surface"

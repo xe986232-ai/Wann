@@ -11,6 +11,7 @@ import {
 } from "@/components/icons";
 import { getProductBySlug, products } from "@/lib/products";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export function generateStaticParams() {
   return products.map((product) => ({ slug: product.slug }));
@@ -63,12 +64,12 @@ export default async function ProductPage({
                 alt={`Provider: ${product.providerName}`}
                 className="h-7 w-7 shrink-0 rounded-full object-cover"
               />
-              <a
+              <Link
                 href={`/provider/sample-packs/${product.providerSlug}`}
                 className="text-sm text-muted transition-colors hover:text-foreground"
               >
                 {product.providerName}
-              </a>
+              </Link>
             </div>
 
             <div className="mb-1 space-y-1">

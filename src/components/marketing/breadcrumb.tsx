@@ -1,4 +1,5 @@
 import { ChevronRightIcon } from "@/components/icons";
+import Link from "next/link";
 
 export interface BreadcrumbItem {
   label: string;
@@ -38,13 +39,13 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
                 {item.label}
               </span>
             ) : (
-              <a
+              <Link
                 href={item.href}
                 itemProp="item"
                 className="truncate text-xs text-muted transition hover:text-foreground"
               >
                 <span itemProp="name">{item.label}</span>
-              </a>
+              </Link>
             )}
           </li>
         );
