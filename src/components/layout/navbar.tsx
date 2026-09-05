@@ -81,7 +81,7 @@ export function Navbar() {
         </div>
 
         {/* search */}
-        <div className="order-3 w-full lg:order-2 lg:w-auto lg:justify-self-center lg:max-w-md">
+        <div className="order-3 w-full lg:order-2 lg:w-full lg:max-w-md lg:justify-self-center">
           <SearchBar />
         </div>
 
