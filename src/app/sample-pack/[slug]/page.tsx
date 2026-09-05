@@ -69,7 +69,7 @@ export default async function ProductPage({
               </Link>
             </div>
 
-            <div className="space-y-0.5">
+            <div className="space-y-0">
               <h1
                 className="break-words font-medium text-foreground"
                 style={{
@@ -81,7 +81,7 @@ export default async function ProductPage({
                 {product.name}
               </h1>
               <h2
-                className="text-muted"
+                className="-mt-1 text-muted"
                 style={{
                   fontSize: "16px",
                   WebkitTextSizeAdjust: "none",
@@ -118,13 +118,13 @@ export default async function ProductPage({
                   key={format}
                   className="flex flex-row items-center gap-1 rounded-full border border-surface-2 px-3 py-1 text-xs text-muted"
                 >
-                  <TileWaveformIcon className="h-4 w-4" />
+                  <TileWaveformIcon className="h-4 w-4 text-white" />
                   {format}
                 </span>
               ))}
               {product.featured && (
                 <span className="flex flex-row items-center gap-1 rounded-full border border-surface-2 px-3 py-1 text-xs text-muted">
-                  <FlameIcon className="h-4 w-4" />
+                  <FlameIcon className="h-4 w-4 text-white" />
                   Featured
                 </span>
               )}
