@@ -72,6 +72,23 @@ export function PlayIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function PauseIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="44"
+      height="44"
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <rect x="24.5" y="24" width="6" height="17" rx="1.5" fill="currentColor" />
+      <rect x="33.5" y="24" width="6" height="17" rx="1.5" fill="currentColor" />
+    </svg>
+  );
+}
+
 /** Equalizer / Sound Bars — two rounded vertical bars; doubles as pause icon. */
 export function EqualizerIcon(props: SVGProps<SVGSVGElement>) {
   return (
