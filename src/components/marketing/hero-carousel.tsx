@@ -21,8 +21,7 @@ const packs: Pack[] = [
   {
     title: "Concrete Bloom",
     subtitle: "Warm analog drums for boom-bap and neo-soul",
-    image:
-      "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=1600&q=80",
+    image: "/products/concrete-bloom.png",
   },
   {
     title: "Glass Horizon",
