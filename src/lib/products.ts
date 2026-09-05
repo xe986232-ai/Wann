@@ -33,7 +33,7 @@ export const products: Product[] = [
     slug: "concrete-bloom",
     name: "Bersaing",
     tagline: "Textured Lo-Fi Percussion & Foley",
-    providerName: "Nightshade Audio",
+    providerName: "RizWoow",
     providerSlug: "nightshade-audio",
     providerImage:
       "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=100&q=80",
@@ -43,7 +43,7 @@ export const products: Product[] = [
     featured: true,
     previewUrl: "/audio/bersaing-preview.mp3",
     description:
-      "Bersaing by Nightshade Audio is a collection of 128 samples built for hazy, lo-fi productions.\n\nDusty percussion loops sit alongside field-recorded foley, giving every hit a worn, tactile character. Layered tape hiss and subtle pitch drift keep the whole kit feeling analog and alive.\n\nThe pack features carefully prepared sounds from close-mic'd drums, cracked vinyl textures, and room-recorded ambience.\n\nAll sounds are royalty-free for commercial tracks, remixes, and DJ sets.\n\nFind that dusty, half-lit vibe with Bersaing from Nightshade Audio.",
+      "Bersaing by RizWoow is a collection of 128 samples built for hazy, lo-fi productions.\n\nDusty percussion loops sit alongside field-recorded foley, giving every hit a worn, tactile character. Layered tape hiss and subtle pitch drift keep the whole kit feeling analog and alive.\n\nThe pack features carefully prepared sounds from close-mic'd drums, cracked vinyl textures, and room-recorded ambience.\n\nAll sounds are royalty-free for commercial tracks, remixes, and DJ sets.\n\nFind that dusty, half-lit vibe with Bersaing from RizWoow.",
     samples: [
       {
         id: "cb-01",
