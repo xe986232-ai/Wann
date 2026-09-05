@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
-import { PageTransition } from "@/components/layout/page-transition";
 import "./globals.css";
 
 const inter = Inter({
@@ -20,10 +19,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background font-sans">
         {/* Navbar lives in the persistent layout (not inside the animated
-            page transition), so it stays locked in place — only the
-            content below it moves during page transitions. */}
+            per-page template), so it stays locked in place — only the
+            content below it slides during page transitions. */}
         <Navbar />
-        <PageTransition>{children}</PageTransition>
+        {children}
       </body>
     </html>
   );
