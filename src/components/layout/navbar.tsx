@@ -29,8 +29,30 @@ export function Navbar() {
       <div className="flex flex-wrap items-center justify-between gap-4 px-sm py-md md:px-lg lg:grid lg:grid-cols-3">
         {/* logo + desktop nav */}
         <div className="order-1 flex items-center gap-8">
-          <Link href="/" className="text-2xl font-semibold tracking-tight text-foreground">
-            Sondrift
+          <Link href="/" className="flex items-center" aria-label="Rizwoow">
+            <svg
+              viewBox="0 0 400 150"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-9 w-auto"
+            >
+              <style>{`
+                @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+                .logo-text {
+                  font-family: 'Pacifico', cursive;
+                  font-size: 60px;
+                  fill: #ffffff;
+                }
+              `}</style>
+              <text
+                x="200"
+                y="90"
+                textAnchor="middle"
+                className="logo-text"
+                transform="rotate(-4 200 90)"
+              >
+                Rizwoow
+              </text>
+            </svg>
           </Link>
 
           <ul className="hidden items-center gap-2 lg:flex">
