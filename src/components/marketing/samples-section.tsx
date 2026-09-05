@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Sample } from "@/lib/products";
 import {
   CheckIcon,
   ChevronDownIcon,
   CollectionIcon,
   DownloadIcon,
+  EqualizerIcon,
   FlagIcon,
   HeartIcon,
   LoopIcon,
@@ -110,6 +111,34 @@ export function SamplesSection({
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [seek, setSeek] = useState<Record<string, number>>({});
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Single shared <audio> element reused across rows so only one sample
+  // ever plays at a time. Created lazily on the client only.
+  useEffect(() => {
+    const audio = new Audio();
+    audioRef.current = audio;
+
+    const handleTimeUpdate = () => {
+      const id = audio.dataset.sampleId;
+      if (!id || !audio.duration) return;
+      setSeek((current) => ({
+        ...current,
+        [id]: audio.currentTime / audio.duration,
+      }));
+    };
+    const handleEnded = () => setPlayingId(null);
+
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("ended", handleEnded);
+      audio.pause();
+      audioRef.current = null;
+    };
+  }, []);
 
   const allTags = useMemo(() => {
     const tags = new Set<string>();
@@ -148,14 +177,58 @@ export function SamplesSection({
   }
 
   function togglePlay(id: string) {
-    setPlayingId((current) => (current === id ? null : id));
+    const audio = audioRef.current;
+    const sample = samples.find((item) => item.id === id);
+
+    setPlayingId((current) => {
+      // Already playing this one -> pause it.
+      if (current === id) {
+        audio?.pause();
+        return null;
+      }
+
+      // Switch (or start) playback to the newly picked sample.
+      if (audio) {
+        if (sample?.url) {
+          audio.dataset.sampleId = id;
+          if (audio.src !== sample.url) {
+            audio.src = sample.url;
+            audio.currentTime = (seek[id] ?? 0) * (audio.duration || 0);
+          }
+          void audio.play().catch(() => {
+            // Autoplay/decoding can fail silently; UI still reflects intent.
+          });
+        } else {
+          // No audio source available for this sample yet — just toggle
+          // the UI state so the play/pause icon still responds.
+          audio.pause();
+        }
+      }
+
+      return id;
+    });
   }
 
   function handleSeek(id: string, fraction: number) {
+    const clamped = Math.min(1, Math.max(0, fraction));
     setSeek((current) => ({
       ...current,
-      [id]: Math.min(1, Math.max(0, fraction)),
+      [id]: clamped,
     }));
+
+    const audio = audioRef.current;
+    const sample = samples.find((item) => item.id === id);
+    if (audio && sample?.url) {
+      if (audio.src !== sample.url) {
+        audio.dataset.sampleId = id;
+        audio.src = sample.url;
+      }
+      if (audio.duration) {
+        audio.currentTime = clamped * audio.duration;
+      }
+      void audio.play().catch(() => {});
+    }
+
     setPlayingId(id);
   }
 
@@ -333,7 +406,11 @@ export function SamplesSection({
                     : "bg-surface-2 text-white hover:bg-accent hover:text-white"
                 }`}
               >
-                <PlayIcon className="h-11 w-11" />
+                {isPlaying ? (
+                  <EqualizerIcon className="h-3.5 w-3.5" />
+                ) : (
+                  <PlayIcon className="h-11 w-11" />
+                )}
               </button>
 
               {/* Name + tags */}

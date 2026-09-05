@@ -6,6 +6,9 @@ export interface Sample {
   bpm?: number;
   key?: string;
   duration: string;
+  /** Optional playable audio preview URL. When missing, the play button
+   * still toggles play/pause UI state but has no audio to actually play. */
+  url?: string;
 }
 
 export interface Product {
