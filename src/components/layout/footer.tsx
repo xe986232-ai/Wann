@@ -39,18 +39,8 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/5 bg-surface px-sm pt-14 md:px-lg md:pt-16">
-      {/* soft brand glow, bottom center */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-1/2 z-0 h-[500px] w-[500px] -translate-x-1/2 translate-y-1/2 rounded-full opacity-60 md:h-[800px] md:w-[800px]"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(202,18,72,0.22) 0%, rgba(202,18,72,0.14) 25%, rgba(202,18,72,0.06) 45%, transparent 70%)",
-        }}
-      />
-
-      <div className="relative z-10 mx-auto flex max-w-[1400px] flex-col gap-12">
+    <footer className="border-t border-white/5 px-sm pt-14 md:px-lg md:pt-16">
+      <div className="mx-auto flex max-w-[1400px] flex-col gap-12">
         {/* link columns */}
         <nav className="flex flex-wrap gap-10 sm:gap-16" aria-labelledby="footer-nav">
           <h2 id="footer-nav" className="sr-only">
