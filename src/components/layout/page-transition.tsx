@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useTransitionStore } from "@/lib/transition-store";
-import { getLenis } from "@/components/layout/smooth-scroll";
 
 // Same easing curve as the Lenis smooth-scroll setup (SmoothScroll
 // component): quartic ease-out. Fast off the top like a real finger-drag,
@@ -72,20 +71,11 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     if (previousPathname.current !== pathname) {
       previousPathname.current = pathname;
 
-      // Reset scroll through Lenis itself (not just window.scrollTo).
-      // Lenis tracks its own animated scroll value independently of the
-      // browser's real scrollY; resetting only the native value leaves
-      // Lenis holding a stale target that it then visibly snaps back to
-      // correct a frame or two later — exactly the "landing glitch" this
-      // fixes. { immediate: true } skips Lenis's own easing so this is a
-      // hard, instant jump to the top, not another animation.
-      const lenis = getLenis();
-      if (lenis) {
-        lenis.scrollTo(0, { immediate: true });
-      } else {
-        window.scrollTo(0, 0);
-      }
-
+      // Scroll positioning for the new page (jump to a starting offset,
+      // then animate up to the top) is owned entirely by template.tsx now
+      // — it needs to happen in a specific order (instant jump before
+      // paint, animated scroll after) that's easiest to guarantee within
+      // the newly-mounted page itself rather than racing it from here.
       navigationDone.current = true;
       tryEndExit();
     }
