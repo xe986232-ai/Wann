@@ -10,10 +10,16 @@ import { useTransitionStore } from "@/lib/transition-store";
 // then decelerates naturally — instead of a mechanical in-out curve.
 const scrollEase = (t: number) => 1 - Math.pow(1 - t, 4);
 
-// How far the outgoing page dips down before reversing. Kept modest —
-// this is just a "flick" cue, not a full page-height scroll — since it
-// may have to reverse again almost immediately on a fast/prefetched nav.
-const EXIT_PEAK_VH = 24;
+// How far the outgoing page dips UP before reversing (negative y = page
+// content shifts upward, as if still scrolling forward/down the page).
+// Kept modest — this is just a "flick" cue, not a full page-height
+// scroll — since it may have to reverse again almost immediately on a
+// fast/prefetched nav. Negative on purpose: reversing a negative value
+// back to 0 means the final motion moves DOWNWARD into place, matching
+// the "arrives from above, settles down" feel used everywhere else
+// (see ENTER_START_VH below) — if this were positive, the reversal
+// would move UPWARD into place instead, the opposite direction.
+const EXIT_PEAK_VH = -24;
 const EXIT_DURATION_S = 0.45;
 
 // How far "above" its resting position a page starts when it arrives
@@ -38,7 +44,7 @@ function vhToPx(vh: number) {
  * animations have to agree on timing or position.
  *
  * Sequence for a TransitionLink click:
- *   1. startExit() flips isExiting; y starts animating 0 -> +EXIT_PEAK_VH
+ *   1. startExit() flips isExiting; y starts animating 0 -> EXIT_PEAK_VH
  *      while, in parallel, the real navigation happens (transition-link.tsx
  *      no longer waits for this animation before calling router.push).
  *   2. The MOMENT the pathname actually changes — whatever y's value is
