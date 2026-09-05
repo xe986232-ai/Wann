@@ -14,7 +14,7 @@ const scrollEase = (t: number) => 1 - Math.pow(1 - t, 4);
 // scroll" feels similar across phone and desktop — but see
 // getScrollStartY below: on shorter pages this gets capped well before
 // the page's actual max scroll, not clamped right at it.
-const SCROLL_START_VH_FRACTION = 0.9;
+const SCROLL_START_VH_FRACTION = 0.5;
 
 // On a short page (like a compact /sample-pack), a naive 90vh target can
 // exceed the page's real scrollable room entirely. Landing the jump
