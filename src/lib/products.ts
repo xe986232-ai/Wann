@@ -35,8 +35,7 @@ export const products: Product[] = [
     providerSlug: "nightshade-audio",
     providerImage:
       "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=100&q=80",
-    image:
-      "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=800&q=80",
+    image: "/products/concrete-bloom.png",
     downloads: 128,
     formats: ["Wav"],
     featured: true,
