@@ -1,7 +1,15 @@
 @import "tailwindcss";
 
 html {
-  scroll-behavior: smooth;
+  /* Lenis (see smooth-scroll.tsx) owns all scroll smoothing via JS.
+     Native `scroll-behavior: smooth` here would double up on top of it —
+     the browser tries to smooth its own scroll changes at the same time
+     Lenis is animating, and the two fight each other right as the scroll
+     lands, producing a small bounce/overshoot instead of a clean stop.
+     This is most visible on shorter pages, where Lenis's own animation
+     ends near-stationary and the native correction has nothing to hide
+     behind. */
+  scroll-behavior: auto;
 }
 
 :root {
