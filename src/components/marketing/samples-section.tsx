@@ -55,10 +55,10 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
   if (samples.length === 0) return null;
 
   return (
-    <div className="mt-lg rounded-2xl bg-surface px-sm py-4 md:px-lg">
+    <div className="mt-lg rounded-2xl bg-surface py-4">
       {/* Row 1: Samples tab */}
-      <div className="relative w-full max-w-full border-b border-surface-2 pb-3">
-        <ul className="flex w-full gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="relative w-full max-w-full border-b border-background pb-3">
+        <ul className="flex w-full gap-3 overflow-x-auto px-sm [-ms-overflow-style:none] [scrollbar-width:none] md:px-lg [&::-webkit-scrollbar]:hidden">
           <li>
             <button
               type="button"
@@ -78,8 +78,8 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
       </div>
 
       {/* Row 2: Loops / One shots */}
-      <div className="relative w-full max-w-full border-b border-surface-2 py-3">
-        <ul className="flex w-full items-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="relative w-full max-w-full border-b border-background py-3">
+        <ul className="flex w-full items-center gap-2 overflow-x-auto px-sm [-ms-overflow-style:none] [scrollbar-width:none] md:px-lg [&::-webkit-scrollbar]:hidden">
           {TYPE_FILTERS.map((filter) => (
             <li key={filter.value}>
               <button
@@ -104,7 +104,7 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
       </div>
 
       {/* Row 3: Search + sort */}
-      <div className="flex w-full items-center justify-between gap-4 border-b border-surface-2 py-3">
+      <div className="flex w-full items-center justify-between gap-4 border-b border-background px-sm py-3 md:px-lg">
         <div className="relative min-w-0 flex-1">
           <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
           <input
@@ -128,7 +128,7 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
       {/* Row 4: Tag filters */}
       {allTags.length > 0 && (
         <div className="relative w-full">
-          <div className="flex w-full items-center gap-2 overflow-x-auto border-b border-surface-2 py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex w-full items-center gap-2 overflow-x-auto border-b border-background px-sm py-3 md:px-lg [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {allTags.map((tag) => (
               <button
                 key={tag}
@@ -154,7 +154,7 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
           line up perfectly and the row dividers stay clean/aligned. */}
       <div className="grid grid-cols-[max-content_1fr_max-content] lg:grid-cols-[max-content_1fr_max-content_max-content_max-content_max-content_max-content]">
         {/* Table header (desktop) */}
-        <div className="col-span-full hidden grid-cols-subgrid items-center gap-4 border-b border-surface-2 px-2 py-3 text-xs text-muted lg:grid">
+        <div className="col-span-full hidden grid-cols-subgrid items-center gap-4 border-b border-background px-sm py-3 text-xs text-muted md:px-lg lg:grid">
           <div />
           <div>Name</div>
           <div>Type</div>
@@ -166,7 +166,7 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
 
         {/* Rows */}
         {filteredSamples.length === 0 && (
-          <p className="col-span-full py-8 text-center text-sm text-muted">
+          <p className="col-span-full px-sm py-8 text-center text-sm text-muted md:px-lg">
             No samples match your filters.
           </p>
         )}
@@ -174,7 +174,7 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
         {filteredSamples.map((sample) => (
           <div
             key={sample.id}
-            className="col-span-full grid grid-cols-subgrid items-center gap-4 border-b border-surface-2 px-2 py-3"
+            className="col-span-full grid grid-cols-subgrid items-center gap-4 border-b border-background px-sm py-3 md:px-lg"
           >
             <button
               type="button"
