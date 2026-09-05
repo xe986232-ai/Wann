@@ -17,7 +17,7 @@ const scrollEase = (t: number) => 1 - Math.pow(1 - t, 4);
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      initial={{ y: -60 }}
+      initial={{ y: 60 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: scrollEase }}
     >
