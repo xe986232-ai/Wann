@@ -106,7 +106,7 @@ export default async function ProductPage({
               <button
                 type="button"
                 aria-label="Add to wishlist"
-                className="flex h-[52px] w-[52px] shrink-0 touch-manipulation select-none items-center justify-center rounded-full bg-surface-2 text-muted transition-all duration-200 ease-in-out hover:text-foreground active:scale-90"
+                className="flex h-[52px] w-[52px] shrink-0 touch-manipulation select-none items-center justify-center rounded-full bg-surface-2 text-white transition-all duration-200 ease-in-out active:scale-90"
               >
                 <HeartIcon className="h-5 w-5" />
               </button>

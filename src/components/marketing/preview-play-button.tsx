@@ -53,7 +53,7 @@ export function PreviewPlayButton({ previewUrl }: { previewUrl?: string }) {
         status === "playing" ? "Pause" : status === "loading" ? "Loading" : "Play"
       }
       onClick={toggle}
-      className="flex h-[52px] w-[52px] shrink-0 touch-manipulation select-none items-center justify-center rounded-full bg-surface-2 text-muted transition-all duration-200 ease-in-out hover:text-foreground active:scale-90"
+      className="flex h-[52px] w-[52px] shrink-0 touch-manipulation select-none items-center justify-center rounded-full bg-surface-2 text-white transition-all duration-200 ease-in-out active:scale-90"
     >
       {status === "loading" ? (
         <svg
@@ -79,9 +79,9 @@ export function PreviewPlayButton({ previewUrl }: { previewUrl?: string }) {
           />
         </svg>
       ) : status === "playing" ? (
-        <PauseIcon className="h-6 w-6" />
+        <PauseIcon className="h-[52px] w-[52px]" />
       ) : (
-        <PlayIcon className="h-6 w-6" />
+        <PlayIcon className="h-[52px] w-[52px]" />
       )}
     </button>
   );
