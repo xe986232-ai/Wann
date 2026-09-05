@@ -54,7 +54,7 @@ export default async function ProductPage({
             </div>
           </div>
 
-          <div className="col-span-12 mt-4 flex flex-col gap-y-2 sm:col-span-6 sm:mt-0 md:col-span-7 lg:col-span-8 xl:col-span-9">
+          <div className="col-span-12 mt-4 flex flex-col gap-y-1.5 sm:col-span-6 sm:mt-0 md:col-span-7 lg:col-span-8 xl:col-span-9">
             <div className="flex items-center gap-2">
               <img
                 src={product.providerImage}
@@ -69,7 +69,7 @@ export default async function ProductPage({
               </Link>
             </div>
 
-            <div className="mb-1 space-y-1">
+            <div className="space-y-0.5">
               <h1
                 className="break-words font-medium text-foreground"
                 style={{
@@ -118,7 +118,7 @@ export default async function ProductPage({
               </button>
             </div>
 
-            <div className="flex flex-row flex-wrap gap-2 py-2">
+            <div className="flex flex-row flex-wrap gap-2">
               {product.formats.map((format) => (
                 <span
                   key={format}
