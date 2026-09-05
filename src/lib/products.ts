@@ -19,8 +19,6 @@ export interface Product {
   providerSlug: string;
   providerImage: string;
   image: string;
-  /** Optional set of images to cycle/alternate through on the card cover. */
-  images?: string[];
   downloads: number;
   formats: string[];
   featured?: boolean;
@@ -40,11 +38,6 @@ export const products: Product[] = [
     providerImage:
       "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=100&q=80",
     image: "/products/concrete-bloom.png",
-    images: [
-      "/products/concrete-bloom.png",
-      "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80",
-    ],
     downloads: 128,
     formats: ["Wav"],
     featured: true,
