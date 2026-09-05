@@ -14,11 +14,15 @@ const scrollEase = (t: number) => 1 - Math.pow(1 - t, 4);
  * Wraps the persistent root layout's {children}.
  *
  * Plays the "outgoing page" half of the transition: when a TransitionLink
- * is clicked, isExiting flips true and this content drifts up + fades out
- * for a beat before the real navigation happens. Once the URL actually
- * changes (new page mounted underneath), isExiting resets so the fresh
- * page starts clean — its own entrance animation is handled separately by
- * app/template.tsx, which Next.js remounts on every navigation natively.
+ * is clicked, isExiting flips true and this content drifts down for a beat
+ * before the real navigation happens. Once the URL actually changes (new
+ * page mounted underneath), isExiting resets to false — but that reset is
+ * instant (duration: 0), not animated. If it animated, this wrapper would
+ * be sliding the new page toward y:0 at the same time app/template.tsx's
+ * own entrance animation is also moving it — two animations stacking on
+ * top of each other, which reads as a stutter/gap instead of one
+ * continuous motion. Snapping this one instantly leaves template.tsx as
+ * the sole driver of the incoming page's motion.
  */
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -36,7 +40,11 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
       animate={isExiting ? { y: 140 } : { y: 0 }}
-      transition={{ duration: 0.5, ease: scrollEase }}
+      transition={
+        isExiting
+          ? { duration: 0.5, ease: scrollEase }
+          : { duration: 0 }
+      }
     >
       {children}
     </motion.div>
