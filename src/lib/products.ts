@@ -107,7 +107,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-09",
-        name: "Concrete_One-Shot_Clap_09.wav",
+        name: "Clap_001.wav",
         type: "one-shot",
         tags: ["Drums", "Clap"],
         duration: "0:01",
@@ -115,7 +115,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-10",
-        name: "Concrete_One-Shot_Crash_10.wav",
+        name: "Crash 2.wav",
         type: "one-shot",
         tags: ["Drums", "Crash"],
         duration: "0:04",
@@ -123,7 +123,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-11",
-        name: "Concrete_140bpm_Drum_Loop_Full_Kit_11.wav",
+        name: "Drum Loop (43) - 140 bpm.wav",
         type: "loop",
         tags: ["Drums", "Full Drums"],
         bpm: 140,
@@ -132,7 +132,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-12",
-        name: "Concrete_Hi-Hat_Loop_Stereo_12.wav",
+        name: "HI HAT ST.wav",
         type: "loop",
         tags: ["Drums", "Hi-Hat"],
         duration: "0:04",
@@ -140,7 +140,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-13",
-        name: "Concrete_One-Shot_Hi-Hat_13.wav",
+        name: "Hat_Basic.wav",
         type: "one-shot",
         tags: ["Drums", "Hi-Hat"],
         duration: "0:01",
@@ -148,7 +148,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-14",
-        name: "Concrete_Hi-Hat_Loop_14.wav",
+        name: "HiHat Loop 04.wav",
         type: "loop",
         tags: ["Drums", "Hi-Hat"],
         duration: "0:02",
@@ -156,7 +156,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-15",
-        name: "Concrete_One-Shot_Kick_15.wav",
+        name: "Kick_003_Sensible.wav",
         type: "one-shot",
         tags: ["Drums", "Kick"],
         duration: "0:01",
@@ -164,7 +164,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-16",
-        name: "Concrete_Vocal_Chop_Loop_16.wav",
+        name: "MaCdii _ Chopped.wav",
         type: "loop",
         tags: ["Vocal", "Chop"],
         duration: "0:04",
@@ -172,7 +172,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-17",
-        name: "Concrete_One-Shot_Ride_17.wav",
+        name: "RIDE_ARTHA.wav",
         type: "one-shot",
         tags: ["Drums", "Ride"],
         duration: "0:01",
@@ -180,7 +180,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-18",
-        name: "Concrete_130bpm_Drum_Loop_Trap_18.wav",
+        name: "hip-hop-trap-drums-fat-syncopated-hits_130bpm.wav",
         type: "loop",
         tags: ["Drums", "Full Drums", "Trap"],
         bpm: 130,
@@ -189,7 +189,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-19",
-        name: "Concrete_138bpm_Percussion_Loop_19.wav",
+        name: "hipdut-percussion-loop_138bpm.wav",
         type: "loop",
         tags: ["Percussion"],
         bpm: 138,
