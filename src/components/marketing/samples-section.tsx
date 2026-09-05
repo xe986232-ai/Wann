@@ -64,9 +64,7 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
               type="button"
               onClick={() => setTypeFilter("all")}
               aria-label="Samples"
-              className={`inline-flex flex-shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[60px] px-6 py-3 outline outline-2 outline-offset-[-2px] transition-all duration-200 ease-in-out select-none ${
-                typeFilter === "all" ? "outline-accent" : "outline-surface-2"
-              }`}
+              className="inline-flex flex-shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[60px] px-6 py-3 outline outline-2 outline-offset-[-2px] outline-border-subtle transition-all duration-200 ease-in-out select-none"
             >
               <SamplesTabIcon className="h-5 w-5 text-muted" />
               <span className="text-base text-foreground">Samples</span>
@@ -141,7 +139,7 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
                 className={`h-9 shrink-0 whitespace-nowrap rounded-3xl border px-4 text-xs transition-colors ${
                   activeTag === tag
                     ? "border-accent text-foreground"
-                    : "border-surface-2 text-muted hover:border-muted"
+                    : "border-border-subtle text-muted hover:border-border-subtle-hover"
                 }`}
               >
                 {tag}

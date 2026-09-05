@@ -8,6 +8,8 @@
   --muted: #99a3b4;
   --accent: #ca1248;
   --accent-hover: #e01553;
+  --border-subtle: rgba(251, 251, 252, 0.14);
+  --border-subtle-hover: rgba(251, 251, 252, 0.28);
 
   --space-xs: 6px;
   --space-sm: 16px;
@@ -26,6 +28,8 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-subtle-hover: var(--border-subtle-hover);
 
   --font-sans: var(--font-inter);
 
