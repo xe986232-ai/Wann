@@ -47,7 +47,7 @@ export const products: Product[] = [
     samples: [
       {
         id: "cb-01",
-        name: "Concrete_82bpm_Drum_Loop_Kick_Hat_Heavy_01.wav",
+        name: "82bpm_Drum_Loop_Kick_Hat_Heavy_01.wav",
         type: "loop",
         tags: ["Drums", "Kick", "Lo-Fi"],
         bpm: 82,
@@ -55,14 +55,14 @@ export const products: Product[] = [
       },
       {
         id: "cb-02",
-        name: "Concrete_One-Shot_Kick_Dusty_02.wav",
+        name: "One-Shot_Kick_Dusty_02.wav",
         type: "one-shot",
         tags: ["Drums", "Kick"],
         duration: "0:01",
       },
       {
         id: "cb-03",
-        name: "Concrete_80bpm_Drum_Loop_Kick_Hat_Slow_03.wav",
+        name: "80bpm_Drum_Loop_Kick_Hat_Slow_03.wav",
         type: "loop",
         tags: ["Drums", "Kick", "Lo-Fi"],
         bpm: 80,
@@ -70,21 +70,21 @@ export const products: Product[] = [
       },
       {
         id: "cb-04",
-        name: "Concrete_One-Shot_Snare_Cracked_04.wav",
+        name: "One-Shot_Snare_Cracked_04.wav",
         type: "one-shot",
         tags: ["Drums", "Snare"],
         duration: "0:01",
       },
       {
         id: "cb-05",
-        name: "Concrete_One-Shot_Clap_Worn_05.wav",
+        name: "One-Shot_Clap_Worn_05.wav",
         type: "one-shot",
         tags: ["Drums", "Clap"],
         duration: "0:01",
       },
       {
         id: "cb-06",
-        name: "Concrete_Bass_One-Shot_E_Synth_Warm_06.wav",
+        name: "Bass_One-Shot_E_Synth_Warm_06.wav",
         type: "one-shot",
         tags: ["Synth", "Bass"],
         key: "E",
@@ -92,7 +92,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-07",
-        name: "Concrete_84bpm_Drum_Loop_Full_Kit_07.wav",
+        name: "84bpm_Drum_Loop_Full_Kit_07.wav",
         type: "loop",
         tags: ["Drums", "Full Drums"],
         bpm: 84,
@@ -100,7 +100,7 @@ export const products: Product[] = [
       },
       {
         id: "cb-08",
-        name: "Concrete_One-Shot_Snare_Room_08.wav",
+        name: "One-Shot_Snare_Room_08.wav",
         type: "one-shot",
         tags: ["Drums", "Snare"],
         duration: "0:01",
