@@ -70,10 +70,24 @@ export default async function ProductPage({
             </div>
 
             <div className="mb-1 space-y-1">
-              <h1 className="break-words text-xl font-medium text-foreground md:text-2xl">
+              <h1
+                className="break-words font-medium text-foreground"
+                style={{
+                  fontSize: "14px",
+                  WebkitTextSizeAdjust: "none",
+                  textSizeAdjust: "none",
+                }}
+              >
                 {product.name}
               </h1>
-              <h2 className="text-sm text-muted md:text-base">
+              <h2
+                className="text-muted"
+                style={{
+                  fontSize: "10px",
+                  WebkitTextSizeAdjust: "none",
+                  textSizeAdjust: "none",
+                }}
+              >
                 {product.tagline}
               </h2>
             </div>
