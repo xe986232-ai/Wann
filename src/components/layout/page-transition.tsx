@@ -10,16 +10,19 @@ import { useTransitionStore } from "@/lib/transition-store";
 // then decelerates naturally — instead of a mechanical in-out curve.
 const scrollEase = (t: number) => 1 - Math.pow(1 - t, 4);
 
-const EXIT_DURATION_S = 0.5;
-const ENTER_DURATION_S = 0.5;
+// How far the outgoing page dips down before reversing. Kept modest —
+// this is just a "flick" cue, not a full page-height scroll — since it
+// may have to reverse again almost immediately on a fast/prefetched nav.
+const EXIT_PEAK_VH = 24;
+const EXIT_DURATION_S = 0.45;
 
-// How far the outgoing page appears to scroll down before the new page
-// takes over, and how far "above" its resting position the incoming
-// page starts — expressed in vh so it scales with viewport height.
-// Exit and entrance deliberately share this exact same magnitude and
-// unit: that's what makes the handoff between them land seamlessly
-// instead of jumping (see the note below).
-const SCROLL_DISTANCE_VH = 50;
+// How far "above" its resting position a page starts when it arrives
+// WITHOUT a preceding TransitionLink exit (browser back/forward, a
+// plain next/link elsewhere, first load never applies since there's no
+// previous pathname). Kept as its own constant since it plays alone,
+// with no exit motion to continue from.
+const ENTER_START_VH = 40;
+const ENTER_DURATION_S = 0.5;
 
 function vhToPx(vh: number) {
   return (vh * window.innerHeight) / 100;
@@ -28,47 +31,37 @@ function vhToPx(vh: number) {
 /**
  * Wraps the persistent root layout's {children}.
  *
- * Owns a single vertical offset (`y`) used for BOTH halves of the page
- * transition — exit and entrance alike — so the two can never fall out
- * of sync with each other.
+ * Owns a single vertical offset (`y`) for the whole page-transition
+ * animation. Exit and entrance are never two separate, independently
+ * timed animations — the entrance is simply "reverse whatever `y` is
+ * doing, right now, back to 0", so there's no handoff point where two
+ * animations have to agree on timing or position.
  *
  * Sequence for a TransitionLink click:
- *   1. startExit() flips isExiting; y animates 0 -> +SCROLL_DISTANCE_VH
+ *   1. startExit() flips isExiting; y starts animating 0 -> +EXIT_PEAK_VH
  *      while, in parallel, the real navigation happens (transition-link.tsx
  *      no longer waits for this animation before calling router.push).
- *   2. Handing off to the entrance requires BOTH of these, whichever
- *      finishes later:
- *        - minDurationDone — the exit has played for at least
- *          EXIT_DURATION_S, so a fast/prefetched navigation never cuts
- *          it short.
- *        - navigationDone — the pathname has actually changed, so a
- *          slow network never leaves a dead pause: the exit keeps
- *          visibly holding its "exited" position while the route loads.
- *   3. At handoff, y JUMPS (no animation) from +SCROLL_DISTANCE_VH to
- *      -SCROLL_DISTANCE_VH. This is invisible on screen: the content
- *      underneath has also just swapped to the new page at that exact
- *      moment, so nothing actually visible appears to move — only the
- *      offset that's about to be animated away does.
- *   4. y animates -SCROLL_DISTANCE_VH -> 0, landing the new page.
+ *   2. The MOMENT the pathname actually changes — whatever y's value is
+ *      at that instant, whether the exit is 10% done or already sitting
+ *      at its full peak waiting on a slow network — we immediately
+ *      animate(y, 0, ...). Framer Motion interrupts the in-flight exit
+ *      tween and continues smoothly from its current value and velocity,
+ *      so this is one continuous motion, never a jump or a restart.
  *
- * Earlier versions ran the exit and entrance as two *independent*
- * motion.divs — this one, plus a separate one in app/template.tsx —
- * each with its own timer, and the entrance used a different magnitude
- * (a flat 140px exit vs. a 50vh entrance). Because Next.js can swap in
- * the new page's content well before the exit's own timer finishes, the
- * two animations often overlapped for a stretch, and by the time the
- * exit's timer fired the entrance was frequently already near-finished
- * at a *different* offset than the exit — so the "invisible" jump
- * wasn't actually invisible, it landed mid-motion and produced a
- * visible stutter partway through the transition. Owning one shared
- * value with one shared magnitude removes that race entirely: there is
- * only one motion value, so there's nothing left for two timers (or two
- * units) to disagree about.
+ * An earlier version gated this handoff behind BOTH "exit's own fixed
+ * timer finished" AND "navigation finished", so that a fast/prefetched
+ * navigation (which is the common case, and exactly what Next.js's
+ * default link prefetching aims for) would still force the exit to play
+ * out its FULL duration on top of the already-swapped-in new page,
+ * THEN hard-jump to a separate start offset, THEN play a second full
+ * animation back to 0. That read as exactly the double-motion-with-a-
+ * pause-in-the-middle this version removes: two sequential animations
+ * with a snap between them, instead of one continuous one.
  *
- * A plain CSS transform is used throughout (never a real scroll
- * position change), so there's no scroll boundary for the browser's
- * native overscroll/rubber-band behavior, or Lenis's own physics, to
- * fight with.
+ * If navigation happens to be slow, y simply finishes reaching
+ * EXIT_PEAK_VH and holds there (nothing left to animate) until the
+ * pathname changes — a brief, natural-looking pause at a small offset,
+ * not a jarring double-animation.
  */
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -77,46 +70,19 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
 
   const y = useMotionValue(0);
   const previousPathname = useRef(pathname);
-  const wasExiting = useRef(false);
-
-  const minDurationDone = useRef(false);
-  const navigationDone = useRef(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  function playEntrance() {
-    y.set(-vhToPx(SCROLL_DISTANCE_VH));
-    animate(y, 0, { duration: ENTER_DURATION_S, ease: scrollEase });
-  }
-
-  function tryHandoff() {
-    if (minDurationDone.current && navigationDone.current) {
-      endExit();
-      playEntrance();
-    }
-  }
+  const exitInProgress = useRef(false);
 
   useEffect(() => {
-    if (isExiting && !wasExiting.current) {
-      wasExiting.current = true;
-      minDurationDone.current = false;
-      navigationDone.current = false;
-
-      animate(y, vhToPx(SCROLL_DISTANCE_VH), {
+    if (isExiting && !exitInProgress.current) {
+      exitInProgress.current = true;
+      animate(y, vhToPx(EXIT_PEAK_VH), {
         duration: EXIT_DURATION_S,
         ease: scrollEase,
       });
-
-      timeoutRef.current = setTimeout(() => {
-        minDurationDone.current = true;
-        tryHandoff();
-      }, EXIT_DURATION_S * 1000);
     }
     if (!isExiting) {
-      wasExiting.current = false;
+      exitInProgress.current = false;
     }
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isExiting]);
 
@@ -124,14 +90,18 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     if (previousPathname.current !== pathname) {
       previousPathname.current = pathname;
 
-      if (wasExiting.current) {
-        navigationDone.current = true;
-        tryHandoff();
+      if (exitInProgress.current) {
+        // Reverse smoothly from wherever y currently sits — no jump,
+        // no waiting on a timer.
+        exitInProgress.current = false;
+        endExit();
+        animate(y, 0, { duration: ENTER_DURATION_S, ease: scrollEase });
       } else {
-        // Navigation that didn't go through a TransitionLink (browser
-        // back/forward, etc.) — still play the entrance so every route
-        // change gets the same consistent "scroll" feel.
-        playEntrance();
+        // Navigation that didn't go through a TransitionLink exit —
+        // still give it the same "arriving from above" entrance so
+        // every route change gets a consistent feel.
+        y.set(-vhToPx(ENTER_START_VH));
+        animate(y, 0, { duration: ENTER_DURATION_S, ease: scrollEase });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
