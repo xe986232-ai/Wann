@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Navbar } from "@/components/layout/navbar";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,6 +18,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background font-sans">
+        {/* Navbar lives in the persistent layout (not inside the animated
+            per-page template), so it stays locked in place — only the
+            content below it slides during page transitions. */}
+        <Navbar />
         {children}
       </body>
     </html>

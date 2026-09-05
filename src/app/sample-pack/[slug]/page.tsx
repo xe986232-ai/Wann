@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/layout/navbar";
 import { Breadcrumb } from "@/components/marketing/breadcrumb";
 import { ReadMore } from "@/components/marketing/read-more";
 import { SamplesSection } from "@/components/marketing/samples-section";
@@ -31,8 +30,6 @@ export default async function ProductPage({
 
   return (
     <div className="flex flex-col pb-xl">
-      <Navbar />
-
       <div className="mt-md px-sm md:mt-lg md:px-lg">
         <Breadcrumb
           items={[
