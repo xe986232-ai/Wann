@@ -33,7 +33,7 @@ export function Navbar() {
             <svg
               viewBox="0 0 400 150"
               xmlns="http://www.w3.org/2000/svg"
-              className="h-9 w-auto"
+              className="h-14 w-auto"
             >
               <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
