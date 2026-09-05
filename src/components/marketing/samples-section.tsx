@@ -171,9 +171,9 @@ export function SamplesSection({
               aria-label="Samples"
               className="inline-flex flex-shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[60px] px-6 py-3 outline outline-2 outline-offset-[-2px] outline-border-subtle transition-all duration-200 ease-in-out select-none"
             >
-              <SamplesTabIcon className="h-5 w-5 text-muted" />
-              <span className="text-base text-foreground">Samples</span>
-              <span className="text-[10px] text-muted">
+              <SamplesTabIcon className="h-5 w-5 text-white" />
+              <span className="text-base text-white">Samples</span>
+              <span className="text-[10px] text-white">
                 ({samples.length})
               </span>
             </button>
@@ -197,7 +197,7 @@ export function SamplesSection({
                 className={`flex h-11 shrink-0 items-center justify-start gap-1 whitespace-nowrap rounded-3xl px-5 transition-colors duration-200 select-none ${
                   typeFilter === filter.value
                     ? "bg-accent text-white"
-                    : "bg-surface-2 text-muted hover:text-foreground"
+                    : "bg-surface-2 text-white hover:text-white"
                 }`}
               >
                 <span className="text-sm">{filter.label}</span>
@@ -211,19 +211,19 @@ export function SamplesSection({
       {/* Row 3: Search + sort */}
       <div className="flex w-full items-center justify-between gap-4 border-b border-background px-sm py-3 md:px-lg">
         <div className="relative min-w-0 flex-1">
-          <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+          <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
           <input
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search samples"
-            className="h-11 w-full rounded-3xl bg-surface-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted outline-none"
+            className="h-11 w-full rounded-3xl bg-surface-2 pl-9 pr-4 text-sm text-white placeholder:text-white outline-none"
           />
         </div>
         <button
           type="button"
           aria-label="Sort samples"
-          className="flex h-11 shrink-0 items-center gap-2 rounded-3xl bg-surface-2 px-4 text-xs text-muted hover:text-foreground"
+          className="flex h-11 shrink-0 items-center gap-2 rounded-3xl bg-surface-2 px-4 text-xs text-white hover:text-white"
         >
           Most Popular
           <ChevronDownIcon className="h-4 w-4" />
@@ -243,8 +243,8 @@ export function SamplesSection({
                 }
                 className={`h-9 shrink-0 whitespace-nowrap rounded-3xl border px-4 text-xs transition-colors ${
                   activeTag === tag
-                    ? "border-accent text-foreground"
-                    : "border-border-subtle text-muted hover:border-border-subtle-hover"
+                    ? "border-accent text-white"
+                    : "border-border-subtle text-white hover:border-border-subtle-hover"
                 }`}
               >
                 {tag}
@@ -262,7 +262,7 @@ export function SamplesSection({
           stay in flow (the rest use `hidden ... lg:flex/block`). */}
       <div className="grid grid-cols-[max-content_1fr_max-content] lg:grid-cols-[max-content_max-content_max-content_1fr_max-content_max-content_max-content_max-content_max-content_max-content]">
         {/* Table header (desktop) */}
-        <div className="col-span-full hidden grid-cols-subgrid items-center gap-4 border-b border-background px-sm py-3 text-xs text-muted md:px-lg lg:grid">
+        <div className="col-span-full hidden grid-cols-subgrid items-center gap-4 border-b border-background px-sm py-3 text-xs text-white md:px-lg lg:grid">
           <div />
           <div />
           <div />
@@ -277,7 +277,7 @@ export function SamplesSection({
 
         {/* Rows */}
         {filteredSamples.length === 0 && (
-          <p className="col-span-full px-sm py-8 text-center text-sm text-muted md:px-lg">
+          <p className="col-span-full px-sm py-8 text-center text-sm text-white md:px-lg">
             No samples match your filters.
           </p>
         )}
@@ -294,7 +294,7 @@ export function SamplesSection({
               {/* Multi-download checkbox */}
               <div className="hidden lg:flex items-center justify-center">
                 <label
-                  className="flex h-5 w-5 cursor-pointer items-center justify-center rounded border border-border-subtle text-accent transition-colors hover:border-border-subtle-hover"
+                  className="flex h-5 w-5 cursor-pointer items-center justify-center rounded border border-border-subtle text-white transition-colors hover:border-border-subtle-hover"
                   aria-label={`Select ${sample.name} for multi-download`}
                 >
                   <input
@@ -330,7 +330,7 @@ export function SamplesSection({
                 className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors ${
                   isPlaying
                     ? "bg-accent text-white"
-                    : "bg-surface-2 text-muted hover:bg-accent hover:text-white"
+                    : "bg-surface-2 text-white hover:bg-accent hover:text-white"
                 }`}
               >
                 <PlayIcon className="h-6 w-6" />
@@ -338,14 +338,14 @@ export function SamplesSection({
 
               {/* Name + tags */}
               <div className="relative min-w-0 overflow-hidden">
-                <p className="origin-left scale-75 whitespace-nowrap text-[11px] text-foreground">
+                <p className="origin-left scale-75 whitespace-nowrap text-[11px] text-white">
                   {sample.name}
                 </p>
                 <div className="mt-1 flex flex-nowrap gap-1.5 overflow-hidden">
                   {sample.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="shrink-0 rounded-full bg-background px-2.5 py-1 text-xs text-muted"
+                      className="shrink-0 rounded-full bg-background px-2.5 py-1 text-xs text-white"
                     >
                       {tag}
                     </span>
@@ -366,7 +366,7 @@ export function SamplesSection({
               </div>
 
               {/* Type */}
-              <div className="hidden items-center justify-center text-muted lg:flex">
+              <div className="hidden items-center justify-center text-white lg:flex">
                 {sample.type === "loop" ? (
                   <LoopIcon className="h-5 w-5" aria-label="Loop" />
                 ) : (
@@ -375,17 +375,17 @@ export function SamplesSection({
               </div>
 
               {/* Bpm */}
-              <div className="hidden justify-center text-xs text-muted lg:flex">
+              <div className="hidden justify-center text-xs text-white lg:flex">
                 {sample.bpm ?? "-"}
               </div>
 
               {/* Key */}
-              <div className="hidden justify-center text-xs text-muted lg:flex">
+              <div className="hidden justify-center text-xs text-white lg:flex">
                 {sample.key ?? "-"}
               </div>
 
               {/* Time */}
-              <div className="hidden justify-center text-xs text-muted lg:flex">
+              <div className="hidden justify-center text-xs text-white lg:flex">
                 {sample.duration}
               </div>
 
@@ -394,21 +394,21 @@ export function SamplesSection({
                 <button
                   type="button"
                   aria-label="Show similar sounds"
-                  className="hidden h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground md:flex"
+                  className="hidden h-11 w-11 items-center justify-center rounded-3xl text-white transition-colors hover:bg-surface-2 hover:text-white md:flex"
                 >
                   <SimilarIcon className="h-5 w-5" />
                 </button>
                 <button
                   type="button"
                   aria-label="Add to wishlist"
-                  className="hidden h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground md:flex"
+                  className="hidden h-11 w-11 items-center justify-center rounded-3xl text-white transition-colors hover:bg-surface-2 hover:text-white md:flex"
                 >
                   <HeartIcon className="h-5 w-5" />
                 </button>
                 <button
                   type="button"
                   aria-label="Download sample"
-                  className="hidden h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground md:flex"
+                  className="hidden h-11 w-11 items-center justify-center rounded-3xl text-white transition-colors hover:bg-surface-2 hover:text-white md:flex"
                 >
                   <DownloadIcon className="h-5 w-5" />
                 </button>
@@ -421,7 +421,7 @@ export function SamplesSection({
                         current === sample.id ? null : sample.id,
                       )
                     }
-                    className="flex h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
+                    className="flex h-11 w-11 items-center justify-center rounded-3xl text-white transition-colors hover:bg-surface-2 hover:text-white"
                   >
                     <MenuIcon className="h-5 w-5" />
                   </button>
@@ -429,30 +429,30 @@ export function SamplesSection({
                     <div className="absolute right-0 top-[calc(100%+8px)] z-20 w-52 rounded-lg bg-surface-2 py-2 shadow-lg">
                       <button
                         type="button"
-                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-white hover:bg-surface"
                       >
-                        <DownloadIcon className="h-4 w-4 text-muted" />
+                        <DownloadIcon className="h-4 w-4 text-white" />
                         Download sample
                       </button>
                       <button
                         type="button"
-                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-white hover:bg-surface"
                       >
-                        <HeartIcon className="h-4 w-4 text-muted" />
+                        <HeartIcon className="h-4 w-4 text-white" />
                         Add to wishlist
                       </button>
                       <button
                         type="button"
-                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-white hover:bg-surface"
                       >
-                        <TempoIcon className="h-4 w-4 text-muted" />
+                        <TempoIcon className="h-4 w-4 text-white" />
                         Change Tempo
                       </button>
                       <button
                         type="button"
-                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-white hover:bg-surface"
                       >
-                        <SimilarIcon className="h-4 w-4 text-muted" />
+                        <SimilarIcon className="h-4 w-4 text-white" />
                         Find Similar
                       </button>
                       <a
@@ -461,23 +461,23 @@ export function SamplesSection({
                             ? `/provider/sample-packs/${providerSlug}`
                             : "#"
                         }
-                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-white hover:bg-surface"
                       >
-                        <ProviderIcon className="h-4 w-4 text-muted" />
+                        <ProviderIcon className="h-4 w-4 text-white" />
                         View Provider
                       </a>
                       <button
                         type="button"
-                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-white hover:bg-surface"
                       >
-                        <CollectionIcon className="h-4 w-4 text-muted" />
+                        <CollectionIcon className="h-4 w-4 text-white" />
                         Add to Collection
                       </button>
                       <button
                         type="button"
-                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-white hover:bg-surface"
                       >
-                        <FlagIcon className="h-4 w-4 text-muted" />
+                        <FlagIcon className="h-4 w-4 text-white" />
                         Report Sample
                       </button>
                     </div>
