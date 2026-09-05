@@ -10,24 +10,19 @@ import { useTransitionStore } from "@/lib/transition-store";
 // then decelerates naturally — instead of a mechanical in-out curve.
 const scrollEase = (t: number) => 1 - Math.pow(1 - t, 4);
 
-// How far the outgoing page dips UP before reversing (negative y = page
-// content shifts upward, as if still scrolling forward/down the page).
-// Kept modest — this is just a "flick" cue, not a full page-height
-// scroll — since it may have to reverse again almost immediately on a
-// fast/prefetched nav. Negative on purpose: reversing a negative value
-// back to 0 means the final motion moves DOWNWARD into place, matching
-// the "arrives from above, settles down" feel used everywhere else
-// (see ENTER_START_VH below) — if this were positive, the reversal
-// would move UPWARD into place instead, the opposite direction.
-const EXIT_PEAK_VH = -24;
+// How far the outgoing page dips DOWN before the new page takes over.
+// Kept modest — it's just a "drifting away" cue, not a full scroll —
+// since it may get cut short (see below) by a fast/prefetched nav.
+const EXIT_PEAK_VH = 24;
 const EXIT_DURATION_S = 0.45;
 
-// How far "above" its resting position a page starts when it arrives
-// WITHOUT a preceding TransitionLink exit (browser back/forward, a
-// plain next/link elsewhere, first load never applies since there's no
-// previous pathname). Kept as its own constant since it plays alone,
-// with no exit motion to continue from.
-const ENTER_START_VH = 40;
+// How far "pre-scrolled" the incoming page starts, i.e. how far above
+// its resting position, before animating DOWN into place. Used both
+// right after an exit (see below) and for navigation with no preceding
+// TransitionLink exit (browser back/forward, a plain next/link, etc.),
+// so every route change gets the same consistent "arrives from above,
+// settles down" feel.
+const ENTER_START_VH = 45;
 const ENTER_DURATION_S = 0.5;
 
 function vhToPx(vh: number) {
@@ -37,37 +32,43 @@ function vhToPx(vh: number) {
 /**
  * Wraps the persistent root layout's {children}.
  *
- * Owns a single vertical offset (`y`) for the whole page-transition
- * animation. Exit and entrance are never two separate, independently
- * timed animations — the entrance is simply "reverse whatever `y` is
- * doing, right now, back to 0", so there's no handoff point where two
- * animations have to agree on timing or position.
+ * The whole transition — exit AND entrance — moves in ONE direction,
+ * down, the entire time. There is no reversal. That matters: it's the
+ * difference between "continuing to scroll" (coherent, everything
+ * keeps moving the same way) and "bouncing back" (incoherent — the
+ * outgoing page would drift one way and the incoming page would arrive
+ * moving the opposite way).
  *
  * Sequence for a TransitionLink click:
- *   1. startExit() flips isExiting; y starts animating 0 -> EXIT_PEAK_VH
- *      while, in parallel, the real navigation happens (transition-link.tsx
- *      no longer waits for this animation before calling router.push).
- *   2. The MOMENT the pathname actually changes — whatever y's value is
- *      at that instant, whether the exit is 10% done or already sitting
- *      at its full peak waiting on a slow network — we immediately
- *      animate(y, 0, ...). Framer Motion interrupts the in-flight exit
- *      tween and continues smoothly from its current value and velocity,
- *      so this is one continuous motion, never a jump or a restart.
+ *   1. startExit() flips isExiting; y animates 0 -> +EXIT_PEAK_VH
+ *      (down) while, in parallel, the real navigation happens
+ *      (transition-link.tsx no longer waits for this animation before
+ *      calling router.push).
+ *   2. The MOMENT the pathname actually changes — whether the exit is
+ *      barely underway or already sitting at its full peak waiting on
+ *      a slow network — y JUMPS (no animation, `.set()`) from wherever
+ *      it is to -ENTER_START_VH. This jump is invisible: the content
+ *      underneath has also just swapped to the new page at that exact
+ *      instant, so there's nothing continuous on screen for the eye to
+ *      catch a jump in — like a cut in film hiding a change in camera
+ *      position.
+ *   3. y animates -ENTER_START_VH -> 0 (down), landing the new page.
+ *      Since step 2 already put y in the right starting place the
+ *      instant navigation finished, there's no waiting on a timer here
+ *      — the jump-and-continue happens immediately regardless of how
+ *      far the exit itself got.
  *
- * An earlier version gated this handoff behind BOTH "exit's own fixed
- * timer finished" AND "navigation finished", so that a fast/prefetched
- * navigation (which is the common case, and exactly what Next.js's
- * default link prefetching aims for) would still force the exit to play
- * out its FULL duration on top of the already-swapped-in new page,
- * THEN hard-jump to a separate start offset, THEN play a second full
- * animation back to 0. That read as exactly the double-motion-with-a-
- * pause-in-the-middle this version removes: two sequential animations
- * with a snap between them, instead of one continuous one.
- *
- * If navigation happens to be slow, y simply finishes reaching
- * EXIT_PEAK_VH and holds there (nothing left to animate) until the
- * pathname changes — a brief, natural-looking pause at a small offset,
- * not a jarring double-animation.
+ * An earlier version reversed the exit back to 0 instead of jumping
+ * past it, which kept the motion jump-free but made the incoming page
+ * arrive moving in the OPPOSITE direction from whichever way the exit
+ * had been going — the "kebalik" (reversed) bug. Before that, an even
+ * earlier version got the direction right (always down) but gated the
+ * jump behind the exit's own fixed-duration timer finishing, so a
+ * fast/prefetched navigation forced the exit to keep animating on top
+ * of the already-swapped-in new page before jumping — the "double
+ * animation with a pause" bug. This version keeps the earlier version's
+ * direction (always down, correct) and fixes ITS bug by triggering the
+ * jump off actual navigation completion instead of an unrelated timer.
  */
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -77,6 +78,11 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
   const y = useMotionValue(0);
   const previousPathname = useRef(pathname);
   const exitInProgress = useRef(false);
+
+  function playEntrance() {
+    y.set(-vhToPx(ENTER_START_VH));
+    animate(y, 0, { duration: ENTER_DURATION_S, ease: scrollEase });
+  }
 
   useEffect(() => {
     if (isExiting && !exitInProgress.current) {
@@ -97,18 +103,13 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
       previousPathname.current = pathname;
 
       if (exitInProgress.current) {
-        // Reverse smoothly from wherever y currently sits — no jump,
-        // no waiting on a timer.
         exitInProgress.current = false;
         endExit();
-        animate(y, 0, { duration: ENTER_DURATION_S, ease: scrollEase });
-      } else {
-        // Navigation that didn't go through a TransitionLink exit —
-        // still give it the same "arriving from above" entrance so
-        // every route change gets a consistent feel.
-        y.set(-vhToPx(ENTER_START_VH));
-        animate(y, 0, { duration: ENTER_DURATION_S, ease: scrollEase });
       }
+      // Same call either way: jump-and-continue-down after an exit, or
+      // play the entrance on its own for navigation with no preceding
+      // exit. Both cases want y to end up sliding down into place.
+      playEntrance();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
