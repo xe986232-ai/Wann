@@ -29,11 +29,15 @@ export function Navbar() {
       <div className="flex flex-wrap items-center justify-between gap-4 px-sm py-md md:px-lg lg:grid lg:grid-cols-3">
         {/* logo + desktop nav */}
         <div className="order-1 flex items-center gap-8">
-          <Link href="/" className="flex items-center" aria-label="Rizwoow">
+          <Link
+            href="/"
+            className="relative flex h-9 w-32 shrink-0 items-center"
+            aria-label="Rizwoow"
+          >
             <svg
               viewBox="0 0 400 150"
               xmlns="http://www.w3.org/2000/svg"
-              className="h-14 w-auto"
+              className="absolute left-0 top-1/2 h-14 w-auto -translate-y-1/2"
             >
               <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
