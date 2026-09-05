@@ -1,11 +1,11 @@
 import { Breadcrumb } from "@/components/marketing/breadcrumb";
 import { ReadMore } from "@/components/marketing/read-more";
 import { SamplesSection } from "@/components/marketing/samples-section";
+import { PreviewPlayButton } from "@/components/marketing/preview-play-button";
 import {
   DownloadIcon,
   FlameIcon,
   HeartIcon,
-  PlayIcon,
   TileWaveformIcon,
 } from "@/components/icons";
 import { getProductBySlug, products } from "@/lib/products";
@@ -93,13 +93,7 @@ export default async function ProductPage({
             </div>
 
             <div className="flex min-h-[52px] items-center gap-2">
-              <button
-                type="button"
-                aria-label="Play"
-                className="flex h-[52px] w-[52px] shrink-0 touch-manipulation select-none items-center justify-center rounded-full border-[3px] border-accent text-accent transition-transform duration-200 ease-in-out active:scale-90"
-              >
-                <PlayIcon className="h-6 w-6" />
-              </button>
+              <PreviewPlayButton previewUrl={product.previewUrl} />
 
               <button
                 type="button"
