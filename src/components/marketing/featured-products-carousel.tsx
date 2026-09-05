@@ -160,7 +160,7 @@ export function FeaturedProductsCarousel() {
                 <p className="truncate text-sm font-medium text-foreground transition-colors duration-300">
                   <TransitionLink href={`/sample-pack/${product.slug}`}>{product.name}</TransitionLink>
                 </p>
-                <p className="truncate text-[11px] text-muted">{product.providerName}</p>
+                <p className="truncate text-[9px] leading-tight text-muted">{product.providerName}</p>
               </div>
 
               <div className="flex flex-row flex-wrap gap-2 px-2 pb-2">
