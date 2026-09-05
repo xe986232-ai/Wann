@@ -26,7 +26,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-[#0b0c0f]">
-      <div className="flex flex-wrap items-center justify-between gap-4 px-sm py-md md:px-lg lg:grid lg:grid-cols-3">
+      <div className="flex flex-wrap items-center justify-between gap-4 px-sm py-sm md:px-lg lg:grid lg:grid-cols-3">
         {/* logo + desktop nav */}
         <div className="order-1 flex items-center gap-8">
           <Link
