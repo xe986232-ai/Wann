@@ -21,6 +21,7 @@ const tags = [
 export function FeaturedProductsCarousel() {
   const [activeTag, setActiveTag] = useState("Latest");
   const [playingSlug, setPlayingSlug] = useState<string | null>(null);
+  const [loadingSlug, setLoadingSlug] = useState<string | null>(null);
   const scrollerRef = useRef<HTMLUListElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -31,9 +32,10 @@ export function FeaturedProductsCarousel() {
   function togglePlay(slug: string, previewUrl?: string) {
     if (!previewUrl) return;
 
-    if (playingSlug === slug) {
+    if (playingSlug === slug || loadingSlug === slug) {
       audioRef.current?.pause();
       setPlayingSlug(null);
+      setLoadingSlug(null);
       return;
     }
 
@@ -42,10 +44,24 @@ export function FeaturedProductsCarousel() {
       audioRef.current.addEventListener("ended", () => setPlayingSlug(null));
     }
 
-    audioRef.current.src = previewUrl;
-    audioRef.current.currentTime = 0;
-    audioRef.current.play();
-    setPlayingSlug(slug);
+    const audio = audioRef.current;
+
+    setPlayingSlug(null);
+    setLoadingSlug(slug);
+
+    const handlePlaying = () => {
+      setLoadingSlug(null);
+      setPlayingSlug(slug);
+      audio.removeEventListener("playing", handlePlaying);
+    };
+    audio.addEventListener("playing", handlePlaying);
+
+    audio.src = previewUrl;
+    audio.currentTime = 0;
+    audio.play().catch(() => {
+      setLoadingSlug(null);
+      audio.removeEventListener("playing", handlePlaying);
+    });
   }
 
   useEffect(() => {
@@ -105,11 +121,42 @@ export function FeaturedProductsCarousel() {
                 <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
                   <button
                     type="button"
-                    aria-label={playingSlug === product.slug ? "Pause" : "Play"}
+                    aria-label={
+                      loadingSlug === product.slug
+                        ? "Loading"
+                        : playingSlug === product.slug
+                          ? "Pause"
+                          : "Play"
+                    }
                     onClick={() => togglePlay(product.slug, product.previewUrl)}
                     className="pointer-events-auto flex h-11 w-11 touch-manipulation select-none items-center justify-center rounded-full bg-foreground text-background transition-all duration-200 ease-in-out active:scale-90 md:hover:bg-background md:hover:text-foreground"
                   >
-                    {playingSlug === product.slug ? (
+                    {loadingSlug === product.slug ? (
+                      <svg
+                        className="animate-spin"
+                        width={44}
+                        height={44}
+                        viewBox="0 0 44 44"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <circle
+                          cx="22"
+                          cy="22"
+                          r="17"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeOpacity="0.25"
+                        />
+                        <path
+                          d="M39 22c0-9.389-7.611-17-17-17"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    ) : playingSlug === product.slug ? (
                       <svg
                         className="block h-3.5 w-3.5 shrink-0 text-current transition-colors duration-300"
                         width="1em"
