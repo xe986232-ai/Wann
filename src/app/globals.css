@@ -1,13 +1,8 @@
 @import "tailwindcss";
 
-/*
- * No `scroll-behavior: smooth` here on purpose. Lenis (smooth-scroll.tsx)
- * already handles smooth scrolling in JS — with native CSS smooth-scroll
- * also turned on, any programmatic scroll change (including Lenis's own
- * "immediate" resets on page navigation) got intercepted and re-animated
- * by the browser on top of Lenis's animation, which is what produced the
- * bounce/overshoot when landing on a new page.
- */
+html {
+  scroll-behavior: smooth;
+}
 
 :root {
   --background: #111216;
