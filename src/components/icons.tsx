@@ -336,3 +336,147 @@ export function MenuIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+/** Check — small tick mark, used inside the multi-select checkbox. */
+export function CheckIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M6 10L9 13L14 7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Similar Sounds — two overlapping squares, used for "find similar" actions. */
+export function SimilarIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M7.5 12.5L12.5 7.5M6.5 5C6.5 4.4477 6.719 3.919 7.109 3.529C7.499 3.139 8.028 2.92 8.58 2.92H14.42C14.972 2.92 15.501 3.139 15.891 3.529C16.281 3.919 16.5 4.4477 16.5 5V10.84C16.5 11.392 16.281 11.921 15.891 12.311C15.501 12.701 14.972 12.92 14.42 12.92H8.58C8.028 12.92 7.499 12.701 7.109 12.311C6.719 11.921 6.5 11.392 6.5 10.84V5ZM3.5 8C3.5 7.4477 3.719 6.919 4.109 6.529C4.499 6.139 5.028 5.92 5.58 5.92H11.42C11.972 5.92 12.501 6.139 12.891 6.529C13.281 6.919 13.5 7.4477 13.5 8V13.84C13.5 14.392 13.281 14.921 12.891 15.311C12.501 15.701 11.972 15.92 11.42 15.92H5.58C5.028 15.92 4.499 15.701 4.109 15.311C3.719 14.921 3.5 14.392 3.5 13.84V8Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Tempo — sparkle-style diamond, used for "change tempo" actions. */
+export function TempoIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M13.24 6.76C14.1 7.62 14.58 8.78 14.58 10C14.58 11.22 14.1 12.38 13.24 13.24C12.38 14.1 11.22 14.58 10 14.58C8.78 14.58 7.62 14.1 6.76 13.24C5.9 12.38 5.42 11.22 5.42 10C5.42 8.78 5.9 7.62 6.76 6.76C7.62 5.9 8.78 5.42 10 5.42C11.22 5.42 12.38 5.9 13.24 6.76ZM13.24 6.76L10 10M2.5 10H2.51M17.5 10H17.51M10 2.5V2.51M10 17.5V17.51M4.67 4.67L4.66 4.66M15.35 4.67L15.34 4.66M15.34 15.34L15.35 15.35M4.66 15.34L4.67 15.35"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Provider — head-and-shoulders silhouette, used for "view provider" links. */
+export function ProviderIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M5 17.5V15.83C5 14.95 5.35 14.1 5.98 13.48C6.6 12.85 7.45 12.5 8.33 12.5H11.67C12.55 12.5 13.4 12.85 14.02 13.48C14.65 14.1 15 14.95 15 15.83V17.5M6.67 5.83C6.67 6.72 7.02 7.57 7.64 8.19C8.27 8.82 9.12 9.17 10 9.17C10.88 9.17 11.73 8.82 12.36 8.19C12.98 7.57 13.33 6.72 13.33 5.83C13.33 4.95 12.98 4.1 12.36 3.48C11.73 2.85 10.88 2.5 10 2.5C9.12 2.5 8.27 2.85 7.64 3.48C7.02 4.1 6.67 4.95 6.67 5.83Z"
+        stroke="currentColor"
+        strokeWidth="1.67"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Collection — folder with a plus, used for "add to collection" actions. */
+export function CollectionIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M2.5 6.25C2.5 5.58696 2.76339 4.95107 3.23223 4.48223C3.70107 4.01339 4.33696 3.75 5 3.75H8.33L10 5.83H15C15.663 5.83 16.2989 6.09339 16.7678 6.56223C17.2366 7.03107 17.5 7.667 17.5 8.33V13.75C17.5 14.413 17.2366 15.049 16.7678 15.5178C16.2989 15.9866 15.663 16.25 15 16.25H5C4.33696 16.25 3.70107 15.9866 3.23223 15.5178C2.76339 15.049 2.5 14.413 2.5 13.75V6.25Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 9.58V13.75M7.92 11.67H12.08"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Flag — outline pennant, used for "report" actions. */
+export function FlagIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1 -7 0a5 5 0 0 0 -7 0v-9" />
+      <path d="M5 21v-7" />
+    </svg>
+  );
+}

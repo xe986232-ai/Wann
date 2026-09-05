@@ -129,7 +129,11 @@ export default async function ProductPage({
         </div>
 
         {product.samples && product.samples.length > 0 && (
-          <SamplesSection samples={product.samples} />
+          <SamplesSection
+            samples={product.samples}
+            packImage={product.image}
+            providerSlug={product.providerSlug}
+          />
         )}
       </div>
     </div>

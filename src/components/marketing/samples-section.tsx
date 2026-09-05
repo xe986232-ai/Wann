@@ -3,19 +3,27 @@
 import { useMemo, useState } from "react";
 import type { Sample } from "@/lib/products";
 import {
+  CheckIcon,
   ChevronDownIcon,
+  CollectionIcon,
   DownloadIcon,
+  FlagIcon,
   HeartIcon,
   LoopIcon,
   MenuIcon,
   OneShotIcon,
   PlayIcon,
+  ProviderIcon,
   SamplesTabIcon,
   SearchIcon,
+  SimilarIcon,
+  TempoIcon,
 } from "@/components/icons";
 
 interface SamplesSectionProps {
   samples: Sample[];
+  packImage?: string;
+  providerSlug?: string;
 }
 
 type TypeFilter = "all" | "loop" | "one-shot";
@@ -25,10 +33,83 @@ const TYPE_FILTERS: { label: string; value: TypeFilter }[] = [
   { label: "One shots", value: "one-shot" },
 ];
 
-export function SamplesSection({ samples }: SamplesSectionProps) {
+const WAVEFORM_BAR_COUNT = 40;
+
+/** Deterministic pseudo-random bar heights (0.12–1) seeded by sample id,
+ * so the waveform stays stable across re-renders without real audio data. */
+function getWaveformBars(seed: string) {
+  let state = 0;
+  for (let i = 0; i < seed.length; i++) {
+    state = (state * 31 + seed.charCodeAt(i)) >>> 0;
+  }
+  state = state || 1;
+
+  const bars: number[] = [];
+  for (let i = 0; i < WAVEFORM_BAR_COUNT; i++) {
+    state = (state * 1103515245 + 12345) >>> 0;
+    bars.push(0.12 + ((state >>> 8) % 100) / 100 * 0.88);
+  }
+  return bars;
+}
+
+function Waveform({
+  sampleId,
+  progress,
+  onSeek,
+}: {
+  sampleId: string;
+  progress: number;
+  onSeek: (fraction: number) => void;
+}) {
+  const bars = useMemo(() => getWaveformBars(sampleId), [sampleId]);
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-label="Seek waveform"
+      onClick={(event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        onSeek((event.clientX - rect.left) / rect.width);
+      }}
+      className="relative h-9 w-[220px] cursor-pointer"
+    >
+      <div className="absolute inset-0 flex items-center gap-[2px] overflow-hidden">
+        {bars.map((height, index) => (
+          <div
+            key={index}
+            className="w-[3px] shrink-0 rounded-full bg-surface-2"
+            style={{ height: `${Math.round(height * 100)}%` }}
+          />
+        ))}
+      </div>
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 flex items-center gap-[2px] overflow-hidden"
+        style={{ width: `${progress * 100}%` }}
+      >
+        {bars.map((height, index) => (
+          <div
+            key={index}
+            className="w-[3px] shrink-0 rounded-full bg-accent"
+            style={{ height: `${Math.round(height * 100)}%` }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function SamplesSection({
+  samples,
+  packImage,
+  providerSlug,
+}: SamplesSectionProps) {
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
   const [query, setQuery] = useState("");
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [playingId, setPlayingId] = useState<string | null>(null);
+  const [seek, setSeek] = useState<Record<string, number>>({});
 
   const allTags = useMemo(() => {
     const tags = new Set<string>();
@@ -53,6 +134,30 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
   });
 
   if (samples.length === 0) return null;
+
+  function toggleSelected(id: string) {
+    setSelectedIds((current) => {
+      const next = new Set(current);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }
+
+  function togglePlay(id: string) {
+    setPlayingId((current) => (current === id ? null : id));
+  }
+
+  function handleSeek(id: string, fraction: number) {
+    setSeek((current) => ({
+      ...current,
+      [id]: Math.min(1, Math.max(0, fraction)),
+    }));
+    setPlayingId(id);
+  }
 
   return (
     <div className="mt-lg rounded-2xl bg-surface py-4">
@@ -151,12 +256,18 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
       )}
 
       {/* Shared grid: header + every row use grid-cols-subgrid so columns
-          line up perfectly and the row dividers stay clean/aligned. */}
-      <div className="grid grid-cols-[max-content_1fr_max-content] lg:grid-cols-[max-content_1fr_max-content_max-content_max-content_max-content_max-content]">
+          line up perfectly and the row dividers stay clean/aligned.
+          Track order (lg+): checkbox, thumbnail, play, name, waveform,
+          type, bpm, key, time, actions. Below lg only play/name/actions
+          stay in flow (the rest use `hidden ... lg:flex/block`). */}
+      <div className="grid grid-cols-[max-content_1fr_max-content] lg:grid-cols-[max-content_max-content_max-content_1fr_max-content_max-content_max-content_max-content_max-content_max-content]">
         {/* Table header (desktop) */}
         <div className="col-span-full hidden grid-cols-subgrid items-center gap-4 border-b border-background px-sm py-3 text-xs text-muted md:px-lg lg:grid">
           <div />
+          <div />
+          <div />
           <div>Name</div>
+          <div />
           <div>Type</div>
           <div>Bpm</div>
           <div>Key</div>
@@ -171,121 +282,208 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
           </p>
         )}
 
-        {filteredSamples.map((sample) => (
-          <div
-            key={sample.id}
-            className="col-span-full grid grid-cols-subgrid items-center gap-4 border-b border-background px-sm py-3 md:px-lg"
-          >
-            <button
-              type="button"
-              aria-label={`Play ${sample.name}`}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-2 text-muted transition-colors hover:bg-accent hover:text-white"
+        {filteredSamples.map((sample) => {
+          const isSelected = selectedIds.has(sample.id);
+          const isPlaying = playingId === sample.id;
+
+          return (
+            <div
+              key={sample.id}
+              className="col-span-full grid grid-cols-subgrid items-center gap-4 border-b border-background px-sm py-3 md:px-lg"
             >
-              <PlayIcon className="h-6 w-6" />
-            </button>
-
-            <div className="min-w-0 truncate">
-              <p className="truncate text-xs text-foreground">
-                {sample.name}
-              </p>
-              <div className="mt-1 flex flex-wrap gap-1">
-                {sample.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-surface-2 px-2 py-0.5 text-[10px] text-muted"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="hidden items-center justify-center text-muted lg:flex">
-              {sample.type === "loop" ? (
-                <LoopIcon className="h-5 w-5" aria-label="Loop" />
-              ) : (
-                <OneShotIcon className="h-5 w-5" aria-label="One shot" />
-              )}
-            </div>
-
-            <div className="hidden justify-center text-xs text-muted lg:flex">
-              {sample.bpm ?? "-"}
-            </div>
-
-            <div className="hidden justify-center text-xs text-muted lg:flex">
-              {sample.key ?? "-"}
-            </div>
-
-            <div className="hidden justify-center text-xs text-muted lg:flex">
-              {sample.duration}
-            </div>
-
-            <div className="flex items-center justify-end gap-1">
-              <button
-                type="button"
-                aria-label="Add to wishlist"
-                className="hidden h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground md:flex"
-              >
-                <HeartIcon className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                aria-label="Download sample"
-                className="hidden h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground md:flex"
-              >
-                <DownloadIcon className="h-5 w-5" />
-              </button>
-              <div className="relative">
-                <button
-                  type="button"
-                  aria-label="More"
-                  onClick={() =>
-                    setOpenMenuId((current) =>
-                      current === sample.id ? null : sample.id,
-                    )
-                  }
-                  className="flex h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
+              {/* Multi-download checkbox */}
+              <div className="hidden lg:flex items-center justify-center">
+                <label
+                  className="flex h-5 w-5 cursor-pointer items-center justify-center rounded border border-border-subtle text-accent transition-colors hover:border-border-subtle-hover"
+                  aria-label={`Select ${sample.name} for multi-download`}
                 >
-                  <MenuIcon className="h-5 w-5" />
-                </button>
-                {openMenuId === sample.id && (
-                  <div className="absolute right-0 top-[calc(100%+8px)] z-20 w-48 rounded-lg bg-surface-2 py-2 shadow-lg">
-                    <button
-                      type="button"
-                      className="w-full px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
-                    >
-                      Download sample
-                    </button>
-                    <button
-                      type="button"
-                      className="w-full px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
-                    >
-                      Add to wishlist
-                    </button>
-                    <button
-                      type="button"
-                      className="w-full px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
-                    >
-                      Find similar
-                    </button>
-                    <button
-                      type="button"
-                      className="w-full px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
-                    >
-                      Add to collection
-                    </button>
-                    <button
-                      type="button"
-                      className="w-full px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
-                    >
-                      Report sample
-                    </button>
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelected(sample.id)}
+                    className="sr-only"
+                  />
+                  {isSelected && <CheckIcon className="h-4 w-4" />}
+                </label>
+              </div>
+
+              {/* Thumbnail */}
+              <div className="hidden lg:block">
+                {packImage ? (
+                  <div className="h-11 w-11 overflow-hidden rounded-lg bg-surface-2">
+                    <img
+                      src={packImage}
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
                   </div>
+                ) : (
+                  <div className="h-11 w-11 rounded-lg bg-surface-2" />
                 )}
               </div>
+
+              {/* Play */}
+              <button
+                type="button"
+                aria-label={isPlaying ? `Pause ${sample.name}` : `Play ${sample.name}`}
+                onClick={() => togglePlay(sample.id)}
+                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors ${
+                  isPlaying
+                    ? "bg-accent text-white"
+                    : "bg-surface-2 text-muted hover:bg-accent hover:text-white"
+                }`}
+              >
+                <PlayIcon className="h-6 w-6" />
+              </button>
+
+              {/* Name + tags */}
+              <div className="min-w-0 truncate">
+                <p className="truncate text-xs text-foreground">
+                  {sample.name}
+                </p>
+                <div className="mt-1 flex flex-wrap gap-1">
+                  {sample.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full bg-surface-2 px-2 py-0.5 text-[10px] text-muted"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Waveform */}
+              <div className="hidden lg:block">
+                <Waveform
+                  sampleId={sample.id}
+                  progress={isPlaying ? (seek[sample.id] ?? 0) : 0}
+                  onSeek={(fraction) => handleSeek(sample.id, fraction)}
+                />
+              </div>
+
+              {/* Type */}
+              <div className="hidden items-center justify-center text-muted lg:flex">
+                {sample.type === "loop" ? (
+                  <LoopIcon className="h-5 w-5" aria-label="Loop" />
+                ) : (
+                  <OneShotIcon className="h-5 w-5" aria-label="One shot" />
+                )}
+              </div>
+
+              {/* Bpm */}
+              <div className="hidden justify-center text-xs text-muted lg:flex">
+                {sample.bpm ?? "-"}
+              </div>
+
+              {/* Key */}
+              <div className="hidden justify-center text-xs text-muted lg:flex">
+                {sample.key ?? "-"}
+              </div>
+
+              {/* Time */}
+              <div className="hidden justify-center text-xs text-muted lg:flex">
+                {sample.duration}
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center justify-end gap-1">
+                <button
+                  type="button"
+                  aria-label="Show similar sounds"
+                  className="hidden h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground md:flex"
+                >
+                  <SimilarIcon className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Add to wishlist"
+                  className="hidden h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground md:flex"
+                >
+                  <HeartIcon className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Download sample"
+                  className="hidden h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground md:flex"
+                >
+                  <DownloadIcon className="h-5 w-5" />
+                </button>
+                <div className="relative">
+                  <button
+                    type="button"
+                    aria-label="More"
+                    onClick={() =>
+                      setOpenMenuId((current) =>
+                        current === sample.id ? null : sample.id,
+                      )
+                    }
+                    className="flex h-11 w-11 items-center justify-center rounded-3xl text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
+                  >
+                    <MenuIcon className="h-5 w-5" />
+                  </button>
+                  {openMenuId === sample.id && (
+                    <div className="absolute right-0 top-[calc(100%+8px)] z-20 w-52 rounded-lg bg-surface-2 py-2 shadow-lg">
+                      <button
+                        type="button"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                      >
+                        <DownloadIcon className="h-4 w-4 text-muted" />
+                        Download sample
+                      </button>
+                      <button
+                        type="button"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                      >
+                        <HeartIcon className="h-4 w-4 text-muted" />
+                        Add to wishlist
+                      </button>
+                      <button
+                        type="button"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                      >
+                        <TempoIcon className="h-4 w-4 text-muted" />
+                        Change Tempo
+                      </button>
+                      <button
+                        type="button"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                      >
+                        <SimilarIcon className="h-4 w-4 text-muted" />
+                        Find Similar
+                      </button>
+                      <a
+                        href={
+                          providerSlug
+                            ? `/provider/sample-packs/${providerSlug}`
+                            : "#"
+                        }
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                      >
+                        <ProviderIcon className="h-4 w-4 text-muted" />
+                        View Provider
+                      </a>
+                      <button
+                        type="button"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                      >
+                        <CollectionIcon className="h-4 w-4 text-muted" />
+                        Add to Collection
+                      </button>
+                      <button
+                        type="button"
+                        className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-foreground hover:bg-surface"
+                      >
+                        <FlagIcon className="h-4 w-4 text-muted" />
+                        Report Sample
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
