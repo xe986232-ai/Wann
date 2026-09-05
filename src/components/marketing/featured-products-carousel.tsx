@@ -163,7 +163,7 @@ export function FeaturedProductsCarousel() {
                 <p
                   className="truncate leading-tight text-muted"
                   style={{
-                    fontSize: "2px",
+                    fontSize: "9px",
                     WebkitTextSizeAdjust: "none",
                     textSizeAdjust: "none",
                   }}
