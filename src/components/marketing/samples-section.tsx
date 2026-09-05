@@ -432,7 +432,11 @@ export function SamplesSection({
                 </div>
                 {/* Fade the name/tags into the row background at the right
                     edge instead of cutting them off with "…". */}
-                <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-surface to-transparent" />
+                <div
+                  className={`pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l to-transparent ${
+                    isPlaying ? "from-[#0b0c0f]" : "from-surface"
+                  }`}
+                />
               </div>
 
               {/* Waveform */}
