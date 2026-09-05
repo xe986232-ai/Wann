@@ -1,37 +1,39 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { FrozenRouter } from "@/components/layout/frozen-router";
+import { useEffect, useRef } from "react";
+import { useTransitionStore } from "@/lib/transition-store";
 
 /**
- * Page-to-page transition.
+ * Wraps the persistent root layout's {children}.
  *
- * Intent: when the user clicks a product card, the current page should get
- * a brief moment of its own outgoing motion (as if the scroll simply kept
- * going) before the next page takes over — a relay, not an instant swap.
- *
- * - Outgoing page: drifts up + fades out (continues the "scroll" motion).
- * - Incoming page: starts a little below its resting position and slides
- *   up into place, picking up where the outgoing page's motion left off.
- *
- * Both run at the same time (not mode="wait") so there's no blank gap
- * between them — the handoff feels connected instead of stacked.
+ * Plays the "outgoing page" half of the transition: when a TransitionLink
+ * is clicked, isExiting flips true and this content drifts up + fades out
+ * for a beat before the real navigation happens. Once the URL actually
+ * changes (new page mounted underneath), isExiting resets so the fresh
+ * page starts clean — its own entrance animation is handled separately by
+ * app/template.tsx, which Next.js remounts on every navigation natively.
  */
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const isExiting = useTransitionStore((state) => state.isExiting);
+  const endExit = useTransitionStore((state) => state.endExit);
+  const previousPathname = useRef(pathname);
+
+  useEffect(() => {
+    if (previousPathname.current !== pathname) {
+      previousPathname.current = pathname;
+      endExit();
+    }
+  }, [pathname, endExit]);
 
   return (
-    <AnimatePresence initial={false} mode="popLayout">
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0, y: 48 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -48 }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <FrozenRouter>{children}</FrozenRouter>
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      animate={isExiting ? { opacity: 0, y: -48 } : { opacity: 1, y: 0 }}
+      transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
   );
 }

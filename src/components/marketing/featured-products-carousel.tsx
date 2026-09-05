@@ -2,7 +2,7 @@
 
 import { PlayIcon, SectionArrowIcon, TileWaveformIcon } from "@/components/icons";
 import { products } from "@/lib/products";
-import Link from "next/link";
+import { TransitionLink } from "@/components/layout/transition-link";
 import { useRef, useState } from "react";
 
 const tags = [
@@ -61,7 +61,7 @@ export function FeaturedProductsCarousel() {
               className="group/card relative flex w-52 shrink-0 flex-col items-start justify-start gap-1 overflow-hidden rounded-2xl bg-surface-2 p-3 transition-colors duration-300 hover:bg-surface-2/70"
             >
               <div className="relative w-full">
-                <Link href={`/sample-pack/${product.slug}`} className="block">
+                <TransitionLink href={`/sample-pack/${product.slug}`} className="block">
                   <span className="relative block aspect-square w-full overflow-hidden rounded-lg bg-background">
                     <img
                       src={product.image}
@@ -72,7 +72,7 @@ export function FeaturedProductsCarousel() {
                       className="h-full w-full rounded-lg object-cover"
                     />
                   </span>
-                </Link>
+                </TransitionLink>
 
                 <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
                   <button
@@ -113,7 +113,7 @@ export function FeaturedProductsCarousel() {
 
               <div className="flex w-full min-w-0 flex-col px-2 pb-2 pt-3">
                 <p className="truncate text-sm font-medium text-foreground transition-colors duration-300">
-                  <Link href={`/sample-pack/${product.slug}`}>{product.name}</Link>
+                  <TransitionLink href={`/sample-pack/${product.slug}`}>{product.name}</TransitionLink>
                 </p>
                 <p className="truncate text-xs text-muted">{product.providerName}</p>
               </div>
