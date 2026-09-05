@@ -12,9 +12,9 @@ import { motion } from "framer-motion";
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 48 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ y: 80 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.35, ease: [0.65, 0, 0.35, 1] }}
     >
       {children}
     </motion.div>

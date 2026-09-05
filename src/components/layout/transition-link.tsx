@@ -6,7 +6,7 @@ import type { MouseEvent, ReactNode } from "react";
 import { useTransitionStore } from "@/lib/transition-store";
 
 // Keep in sync with the exit animation duration in page-transition.tsx.
-export const EXIT_DURATION_MS = 380;
+export const EXIT_DURATION_MS = 350;
 
 interface TransitionLinkProps extends LinkProps {
   children: ReactNode;
