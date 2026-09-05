@@ -337,20 +337,23 @@ export function SamplesSection({
               </button>
 
               {/* Name + tags */}
-              <div className="min-w-0 truncate">
-                <p className="origin-left scale-75 truncate text-[11px] text-foreground">
+              <div className="relative min-w-0 overflow-hidden">
+                <p className="origin-left scale-75 whitespace-nowrap text-[11px] text-foreground">
                   {sample.name}
                 </p>
-                <div className="mt-1 flex flex-wrap gap-1">
+                <div className="mt-1 flex flex-nowrap gap-1.5 overflow-hidden">
                   {sample.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-background px-2 py-0.5 text-[10px] text-muted"
+                      className="shrink-0 rounded-full bg-background px-2.5 py-1 text-xs text-muted"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
+                {/* Fade the name/tags into the row background at the right
+                    edge instead of cutting them off with "…". */}
+                <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-surface to-transparent" />
               </div>
 
               {/* Waveform */}
