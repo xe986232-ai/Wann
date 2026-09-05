@@ -5,7 +5,7 @@ export function SiteIntro() {
         <h2
           className="font-medium text-foreground"
           style={{
-            fontSize: "30px",
+            fontSize: "27px",
             WebkitTextSizeAdjust: "none",
             textSizeAdjust: "none",
           }}
@@ -15,7 +15,7 @@ export function SiteIntro() {
         <p
           className="text-muted"
           style={{
-            fontSize: "20px",
+            fontSize: "16px",
             lineHeight: "1.7",
             WebkitTextSizeAdjust: "none",
             textSizeAdjust: "none",
