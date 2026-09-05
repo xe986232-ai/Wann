@@ -50,7 +50,7 @@ export function TransitionLink({
   }
 
   return (
-    <Link href={href} onClick={handleClick} {...rest}>
+    <Link href={href} scroll={false} onClick={handleClick} {...rest}>
       {children}
     </Link>
   );
