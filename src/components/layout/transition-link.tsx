@@ -5,12 +5,6 @@ import { useRouter } from "next/navigation";
 import type { MouseEvent, ReactNode } from "react";
 import { useTransitionStore } from "@/lib/transition-store";
 
-// Keep in sync with the exit animation in page-transition.tsx. The
-// quartic ease-out there finishes ~99% of its motion by ~84% of its
-// 0.5s duration, so navigating slightly before the full duration still
-// looks complete rather than cut off.
-export const EXIT_DURATION_MS = 420;
-
 interface TransitionLinkProps extends LinkProps {
   children: ReactNode;
   className?: string;
@@ -20,10 +14,13 @@ interface TransitionLinkProps extends LinkProps {
 /**
  * Drop-in replacement for next/link used on the product cards.
  *
- * On click it plays the current page's exit animation (via
- * useTransitionStore) for EXIT_DURATION_MS, then performs the actual
- * navigation — so leaving the page always gets a brief moment of motion
- * instead of an instant cut, regardless of Next.js version internals.
+ * Starts the exit animation and the real navigation at the same moment,
+ * so the new route loads in parallel with the animation instead of only
+ * starting once the animation finishes (which left a dead pause on
+ * anything slower than an instant, fully-warm cache — e.g. real network
+ * conditions in production). page-transition.tsx is responsible for
+ * holding the exit in place until BOTH the animation's minimum duration
+ * and the navigation itself have completed, whichever is slower.
  */
 export function TransitionLink({
   children,
@@ -49,10 +46,7 @@ export function TransitionLink({
 
     event.preventDefault();
     startExit();
-
-    window.setTimeout(() => {
-      router.push(href.toString());
-    }, EXIT_DURATION_MS);
+    router.push(href.toString());
   }
 
   return (
