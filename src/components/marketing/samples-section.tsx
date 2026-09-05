@@ -56,71 +56,81 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
 
   return (
     <div className="mt-lg rounded-2xl bg-surface px-sm py-4 md:px-lg">
-      {/* Count + type tabs */}
-      <div className="flex flex-col gap-3 border-b border-surface-2 pb-3">
-        <div className="flex items-center gap-2 overflow-x-auto">
-          <button
-            type="button"
-            onClick={() => setTypeFilter("all")}
-            aria-label="Samples"
-            className={`flex-shrink-0 whitespace-nowrap outline outline-2 outline-offset-[-2px] px-6 py-3 rounded-[60px] inline-flex justify-center items-center gap-2 transition-all duration-200 ease-in-out select-none ${
-              typeFilter === "all" ? "outline-accent" : "outline-surface-2"
-            }`}
-          >
-            <SamplesTabIcon className="h-5 w-5 text-muted" />
-            <span className="text-base text-foreground">Samples</span>
-            <span className="text-[10px] text-muted">
-              ({samples.length})
-            </span>
-          </button>
-        </div>
-        <div className="flex items-center gap-2 overflow-x-auto">
-          {TYPE_FILTERS.map((filter) => (
+      {/* Row 1: Samples tab */}
+      <div className="relative w-full max-w-full border-b border-surface-2 pb-3">
+        <ul className="flex w-full gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <li>
             <button
-              key={filter.value}
               type="button"
-              onClick={() =>
-                setTypeFilter((current) =>
-                  current === filter.value ? "all" : filter.value,
-                )
-              }
-              className={`shrink-0 whitespace-nowrap rounded-3xl px-5 py-2.5 text-sm transition-colors ${
-                typeFilter === filter.value
-                  ? "bg-accent text-white"
-                  : "bg-surface-2 text-muted hover:text-foreground"
+              onClick={() => setTypeFilter("all")}
+              aria-label="Samples"
+              className={`inline-flex flex-shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[60px] px-6 py-3 outline outline-2 outline-offset-[-2px] transition-all duration-200 ease-in-out select-none ${
+                typeFilter === "all" ? "outline-accent" : "outline-surface-2"
               }`}
             >
-              {filter.label}
+              <SamplesTabIcon className="h-5 w-5 text-muted" />
+              <span className="text-base text-foreground">Samples</span>
+              <span className="text-[10px] text-muted">
+                ({samples.length})
+              </span>
             </button>
-          ))}
-        </div>
+          </li>
+        </ul>
+        <div className="pointer-events-none absolute right-0 top-0 h-14 w-16 bg-gradient-to-l from-surface to-transparent" />
       </div>
 
-      {/* Search + tag filters */}
-      <div className="flex flex-col gap-3 border-b border-surface-2 py-3">
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1">
-            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
-            <input
-              type="text"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search samples"
-              className="h-11 w-full rounded-3xl bg-surface-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted outline-none"
-            />
-          </div>
-          <button
-            type="button"
-            aria-label="Sort samples"
-            className="flex h-11 shrink-0 items-center gap-2 rounded-3xl bg-surface-2 px-4 text-xs text-muted hover:text-foreground"
-          >
-            Most Popular
-            <ChevronDownIcon className="h-4 w-4" />
-          </button>
-        </div>
+      {/* Row 2: Loops / One shots */}
+      <div className="relative w-full max-w-full border-b border-surface-2 py-3">
+        <ul className="flex w-full items-center gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {TYPE_FILTERS.map((filter) => (
+            <li key={filter.value}>
+              <button
+                type="button"
+                onClick={() =>
+                  setTypeFilter((current) =>
+                    current === filter.value ? "all" : filter.value,
+                  )
+                }
+                className={`flex h-11 shrink-0 items-center justify-start gap-1 whitespace-nowrap rounded-3xl px-5 transition-colors duration-200 select-none ${
+                  typeFilter === filter.value
+                    ? "bg-accent text-white"
+                    : "bg-surface-2 text-muted hover:text-foreground"
+                }`}
+              >
+                <span className="text-sm">{filter.label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="pointer-events-none absolute right-0 top-0 h-16 w-16 bg-gradient-to-l from-surface to-transparent" />
+      </div>
 
-        {allTags.length > 0 && (
-          <div className="flex items-center gap-2 overflow-x-auto">
+      {/* Row 3: Search + sort */}
+      <div className="flex w-full items-center justify-between gap-4 border-b border-surface-2 py-3">
+        <div className="relative min-w-0 flex-1">
+          <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+          <input
+            type="text"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search samples"
+            className="h-11 w-full rounded-3xl bg-surface-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted outline-none"
+          />
+        </div>
+        <button
+          type="button"
+          aria-label="Sort samples"
+          className="flex h-11 shrink-0 items-center gap-2 rounded-3xl bg-surface-2 px-4 text-xs text-muted hover:text-foreground"
+        >
+          Most Popular
+          <ChevronDownIcon className="h-4 w-4" />
+        </button>
+      </div>
+
+      {/* Row 4: Tag filters */}
+      {allTags.length > 0 && (
+        <div className="relative w-full">
+          <div className="flex w-full items-center gap-2 overflow-x-auto border-b border-surface-2 py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {allTags.map((tag) => (
               <button
                 key={tag}
@@ -138,8 +148,9 @@ export function SamplesSection({ samples }: SamplesSectionProps) {
               </button>
             ))}
           </div>
-        )}
-      </div>
+          <div className="pointer-events-none absolute right-0 top-0 h-12 w-16 bg-gradient-to-l from-surface to-transparent" />
+        </div>
+      )}
 
       {/* Shared grid: header + every row use grid-cols-subgrid so columns
           line up perfectly and the row dividers stay clean/aligned. */}
