@@ -5,6 +5,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useTransitionStore } from "@/lib/transition-store";
 
+// Same easing curve as the Lenis smooth-scroll setup (SmoothScroll
+// component): quartic ease-out. Fast off the top like a real finger-drag,
+// then decelerates naturally — instead of a mechanical in-out curve.
+const scrollEase = (t: number) => 1 - Math.pow(1 - t, 4);
+
 /**
  * Wraps the persistent root layout's {children}.
  *
@@ -30,8 +35,8 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
 
   return (
     <motion.div
-      animate={isExiting ? { y: -80 } : { y: 0 }}
-      transition={{ duration: 0.35, ease: [0.65, 0, 0.35, 1] }}
+      animate={isExiting ? { y: -140 } : { y: 0 }}
+      transition={{ duration: 0.5, ease: scrollEase }}
     >
       {children}
     </motion.div>

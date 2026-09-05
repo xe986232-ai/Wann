@@ -5,8 +5,11 @@ import { useRouter } from "next/navigation";
 import type { MouseEvent, ReactNode } from "react";
 import { useTransitionStore } from "@/lib/transition-store";
 
-// Keep in sync with the exit animation duration in page-transition.tsx.
-export const EXIT_DURATION_MS = 350;
+// Keep in sync with the exit animation in page-transition.tsx. The
+// quartic ease-out there finishes ~99% of its motion by ~84% of its
+// 0.5s duration, so navigating slightly before the full duration still
+// looks complete rather than cut off.
+export const EXIT_DURATION_MS = 420;
 
 interface TransitionLinkProps extends LinkProps {
   children: ReactNode;
