@@ -3,7 +3,7 @@
 import { PlayIcon, SectionArrowIcon, TileWaveformIcon } from "@/components/icons";
 import { products } from "@/lib/products";
 import { TransitionLink } from "@/components/layout/transition-link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const tags = [
   "Latest",
@@ -20,11 +20,39 @@ const tags = [
 
 export function FeaturedProductsCarousel() {
   const [activeTag, setActiveTag] = useState("Latest");
+  const [playingSlug, setPlayingSlug] = useState<string | null>(null);
   const scrollerRef = useRef<HTMLUListElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   function scrollByAmount(delta: number) {
     scrollerRef.current?.scrollBy({ left: delta, behavior: "smooth" });
   }
+
+  function togglePlay(slug: string, previewUrl?: string) {
+    if (!previewUrl) return;
+
+    if (playingSlug === slug) {
+      audioRef.current?.pause();
+      setPlayingSlug(null);
+      return;
+    }
+
+    if (!audioRef.current) {
+      audioRef.current = new Audio();
+      audioRef.current.addEventListener("ended", () => setPlayingSlug(null));
+    }
+
+    audioRef.current.src = previewUrl;
+    audioRef.current.currentTime = 0;
+    audioRef.current.play();
+    setPlayingSlug(slug);
+  }
+
+  useEffect(() => {
+    return () => {
+      audioRef.current?.pause();
+    };
+  }, []);
 
   return (
     <section className="relative mx-sm rounded-2xl bg-surface py-12 md:mx-lg">
@@ -77,10 +105,24 @@ export function FeaturedProductsCarousel() {
                 <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
                   <button
                     type="button"
-                    aria-label="Play"
+                    aria-label={playingSlug === product.slug ? "Pause" : "Play"}
+                    onClick={() => togglePlay(product.slug, product.previewUrl)}
                     className="pointer-events-auto flex h-11 w-11 touch-manipulation select-none items-center justify-center rounded-full bg-foreground text-background transition-all duration-200 ease-in-out active:scale-90 md:hover:bg-background md:hover:text-foreground"
                   >
-                    <PlayIcon width={44} height={44} />
+                    {playingSlug === product.slug ? (
+                      <svg
+                        width={44}
+                        height={44}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect x="7" y="6" width="3.5" height="12" rx="1" fill="currentColor" />
+                        <rect x="13.5" y="6" width="3.5" height="12" rx="1" fill="currentColor" />
+                      </svg>
+                    ) : (
+                      <PlayIcon width={44} height={44} />
+                    )}
                   </button>
                 </div>
 

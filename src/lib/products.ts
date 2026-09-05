@@ -24,6 +24,8 @@ export interface Product {
   featured?: boolean;
   description: string;
   samples?: Sample[];
+  /** Optional preview audio URL played from the product card's play button. */
+  previewUrl?: string;
 }
 
 export const products: Product[] = [
@@ -39,6 +41,7 @@ export const products: Product[] = [
     downloads: 128,
     formats: ["Wav"],
     featured: true,
+    previewUrl: "/audio/bersaing-preview.mp3",
     description:
       "Bersaing by Nightshade Audio is a collection of 128 samples built for hazy, lo-fi productions.\n\nDusty percussion loops sit alongside field-recorded foley, giving every hit a worn, tactile character. Layered tape hiss and subtle pitch drift keep the whole kit feeling analog and alive.\n\nThe pack features carefully prepared sounds from close-mic'd drums, cracked vinyl textures, and room-recorded ambience.\n\nAll sounds are royalty-free for commercial tracks, remixes, and DJ sets.\n\nFind that dusty, half-lit vibe with Bersaing from Nightshade Audio.",
     samples: [
