@@ -134,8 +134,8 @@ export function FeaturedProductsCarousel() {
                     {loadingSlug === product.slug ? (
                       <svg
                         className="animate-spin"
-                        width={44}
-                        height={44}
+                        width={20}
+                        height={20}
                         viewBox="0 0 44 44"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -144,15 +144,15 @@ export function FeaturedProductsCarousel() {
                         <circle
                           cx="22"
                           cy="22"
-                          r="17"
+                          r="19"
                           stroke="currentColor"
-                          strokeWidth="2"
+                          strokeWidth="1"
                           strokeOpacity="0.25"
                         />
                         <path
-                          d="M39 22c0-9.389-7.611-17-17-17"
+                          d="M41 22c0-10.493-8.507-19-19-19"
                           stroke="currentColor"
-                          strokeWidth="2"
+                          strokeWidth="1"
                           strokeLinecap="round"
                         />
                       </svg>
