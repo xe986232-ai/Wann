@@ -362,7 +362,9 @@ export function SamplesSection({
           return (
             <div
               key={sample.id}
-              className="col-span-full grid grid-cols-subgrid items-center gap-4 border-b border-background px-sm py-3 md:px-lg"
+              className={`col-span-full grid grid-cols-subgrid items-center gap-4 border-b border-background px-sm py-3 transition-colors duration-200 md:px-lg ${
+                isPlaying ? "bg-[#0b0c0f]" : ""
+              }`}
             >
               {/* Multi-download checkbox */}
               <div className="hidden lg:flex items-center justify-center">
