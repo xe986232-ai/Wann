@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { EqualizerIcon, PlayIcon, SectionArrowIcon } from "@/components/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Pack {
   title: string;
@@ -40,6 +40,18 @@ export function HeroCarousel() {
     setIsPlaying(false);
     setIndex((i) => (i + delta + packs.length) % packs.length);
   }
+
+  // Auto-advance the hero slides every few seconds. Pauses while a
+  // preview is playing so it doesn't jump mid-listen.
+  useEffect(() => {
+    if (isPlaying || packs.length <= 1) return;
+
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % packs.length);
+    }, 5000);
+
+    return () => clearInterval(id);
+  }, [isPlaying, index]);
 
   return (
     <div className="px-sm md:px-lg">
