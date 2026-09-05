@@ -73,7 +73,7 @@ export default async function ProductPage({
               <h1
                 className="break-words font-medium text-foreground"
                 style={{
-                  fontSize: "30px",
+                  fontSize: "27px",
                   WebkitTextSizeAdjust: "none",
                   textSizeAdjust: "none",
                 }}
@@ -83,7 +83,7 @@ export default async function ProductPage({
               <h2
                 className="text-muted"
                 style={{
-                  fontSize: "20px",
+                  fontSize: "16px",
                   WebkitTextSizeAdjust: "none",
                   textSizeAdjust: "none",
                 }}
