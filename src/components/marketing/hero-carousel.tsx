@@ -19,7 +19,7 @@ const packs: Pack[] = [
       "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80",
   },
   {
-    title: "Concrete Bloom",
+    title: "Bersaing",
     subtitle: "Warm analog drums for boom-bap and neo-soul",
     image: "/products/concrete-bloom.png",
   },

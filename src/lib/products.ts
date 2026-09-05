@@ -29,7 +29,7 @@ export interface Product {
 export const products: Product[] = [
   {
     slug: "concrete-bloom",
-    name: "Concrete Bloom",
+    name: "Bersaing",
     tagline: "Textured Lo-Fi Percussion & Foley",
     providerName: "Nightshade Audio",
     providerSlug: "nightshade-audio",
@@ -40,7 +40,7 @@ export const products: Product[] = [
     formats: ["Wav"],
     featured: true,
     description:
-      "Concrete Bloom by Nightshade Audio is a collection of 128 samples built for hazy, lo-fi productions.\n\nDusty percussion loops sit alongside field-recorded foley, giving every hit a worn, tactile character. Layered tape hiss and subtle pitch drift keep the whole kit feeling analog and alive.\n\nThe pack features carefully prepared sounds from close-mic'd drums, cracked vinyl textures, and room-recorded ambience.\n\nAll sounds are royalty-free for commercial tracks, remixes, and DJ sets.\n\nFind that dusty, half-lit vibe with Concrete Bloom from Nightshade Audio.",
+      "Bersaing by Nightshade Audio is a collection of 128 samples built for hazy, lo-fi productions.\n\nDusty percussion loops sit alongside field-recorded foley, giving every hit a worn, tactile character. Layered tape hiss and subtle pitch drift keep the whole kit feeling analog and alive.\n\nThe pack features carefully prepared sounds from close-mic'd drums, cracked vinyl textures, and room-recorded ambience.\n\nAll sounds are royalty-free for commercial tracks, remixes, and DJ sets.\n\nFind that dusty, half-lit vibe with Bersaing from Nightshade Audio.",
     samples: [
       {
         id: "cb-01",
