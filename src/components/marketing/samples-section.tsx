@@ -338,7 +338,7 @@ export function SamplesSection({
 
               {/* Name + tags */}
               <div className="min-w-0 truncate">
-                <p className="truncate text-[9px] text-foreground">
+                <p className="truncate text-[8px] text-foreground">
                   {sample.name}
                 </p>
                 <div className="mt-1 flex flex-wrap gap-1">
